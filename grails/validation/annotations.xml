@@ -1,0 +1,5 @@
+<root>
+    <item name='grails.validation.Validateable'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
