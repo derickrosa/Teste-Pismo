@@ -17,7 +17,6 @@ class AccountController extends  RestfulController{
     }
 
 
-    @Secured(["ROLE_API"])
     def limits() {
         HashMap jsonMap = new HashMap()
         List listOfAccounts = Account.list()
@@ -27,7 +26,6 @@ class AccountController extends  RestfulController{
         render jsonMap as JSON
     }
 
-    @Secured(["ROLE_API"])
     @RequestMapping(method = RequestMethod.PATCH)
     def update(Long id){
         def json = request.JSON

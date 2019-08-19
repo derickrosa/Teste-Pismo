@@ -10,7 +10,6 @@ class PaymentController {
     def transactionService
     static allowedMethods = [save: "POST"]
 
-    @Secured(["ROLE_API"])
     def save() {
         try{
             def json = request.JSON
