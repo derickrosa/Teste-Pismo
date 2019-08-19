@@ -30,10 +30,22 @@ Por já estar habituado com a tecnologia e com o intuito de agilizar o desenvolv
 + #### Estrutura do projeto
 Este projeto utiliza controllers para processar e validar as requisições, services para processar os dados e classes para representar os modelos de dados. 
 
++ #### Segurança
+Para autenticação foi utilizado o Basic Authentication, que é o sistema de autenticação mais comum do protocolo HTTP. Este tipo de autenticação foi implementado utilizando o Spring Security e é incluído no header da requisição HTTP dessa maneira:
+
+Authorization: Basic {credenciais em base 64 no formato usuário:senha}
+
+usuário: "api.pismo"
+senha: "pismoapi"
+
 ## Decisões de Negócio
 
-+ #### PATCH => ~/testePismo/accouns/<id>
++ #### PATCH => ~/testePismo/accounts/<id>
+
 Exemplo de entrada:
+
+/testePismo/accounts/1
+
   {
 	"available_credit_limit": {
 		"amount": 10
