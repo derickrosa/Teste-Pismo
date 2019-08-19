@@ -41,12 +41,13 @@ Payload:
     "password": "pismoapi"
 }
 ```
+Resposta com a geração do token de acesso:
 
 <p align="center">
   <img src="https://github.com/derickrosa/Teste-Pismo/blob/master/token.png">
 </p>
 
-Este token deverá ser incluído no header das futuras requisições:
+Este token deverá ser incluído no header das futuras requisições sob a key "X-Auth-Token":
 
 <p align="center">
   <img src="https://github.com/derickrosa/Teste-Pismo/blob/master/envio_requisi%C3%A7%C3%A3o.png">
