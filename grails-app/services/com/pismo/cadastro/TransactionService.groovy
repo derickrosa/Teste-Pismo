@@ -15,6 +15,7 @@ class TransactionService {
 
         if(!accountInstance){
             accountInstance = new Account(-transactionCommand.amount)
+            accountInstance.id = transactionCommand.account_id
         } else{
             accountInstance.availableWithdrawalLimit -= transactionCommand.amount
             accountInstance.availableCreditLimit -= transactionCommand.amount
