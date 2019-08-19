@@ -6,7 +6,7 @@ API desenvolvida em Groovy utilizando o framework Grails para simular transaçõ
 
 Caso vocẽ tenha o desejo de executar a aplicação localmente, os passos são:
 
-*Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
+* Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
 
 * Instalar <a href="https://www.postgresql.org/download/">PostgreSQL</a>. Banco padrão: "pismo_development"
 
@@ -26,7 +26,7 @@ A aplicação deverá estar rodando em http://localhost:8080/testePismo.
 Por já estar habituado com a tecnologia e com o intuito de agilizar o desenvolvimento , optei por desenvolver o projeto utilizando o framework Grails versão 3.3.0 com Groovy 2.4.11.
 
 + #### Estrutura do projeto
-Este projeto utiliza controllers para processar e validar as requisições, services para processar os dados e classes para representar os modelos de dados via hibernate.
+Este projeto utiliza restful controllers para processar e validar as requisições, services para processar os dados e classes para representar os modelos de dados via hibernate.
 
 + #### Segurança e Autenticação
 Para autenticação foi utilizado Stateless Authentication implementado utilizando o Spring Security.
@@ -70,7 +70,7 @@ Exemplo de payload:
 	}
 }
   
-Este endpoint receberá valores de limite para available_credit_limit e available_withdrawal_limit e abate os respectivos amount dos saldos da conta <id>.
+Este endpoint receberá valores de limite para ```available_credit_limit``` e ```available_withdrawal_limit``` e abate os respectivos "amount" dos saldos da conta <id>.
   
 + #### GET   => ~/testePismo/accounts/limits
 
@@ -124,3 +124,6 @@ Foi criado uma classe extrata "PaymentTransaction" para armazenar as informaçõ
 + #### Testes
 
 Por conta do pouco tempo de desenvolvimento disponível, a aplicação não possui testes automatizados. Obviamente, em uma aplicação que realmente fosse para produção, a presença de testes seria indispensável.
+
++ #### Testes
+Este projeto representa uma ideia simplificada de uma conta digital e que necessitaria de um refinamento nos processos implementados para uma solução mais robusta e que pudesse ser utilizado no mundo real.
