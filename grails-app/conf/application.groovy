@@ -5,17 +5,22 @@
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/home/painelInicial'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'
 grails.plugin.springsecurity.adh.errorPage = '/errors/forbidden'
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'UserRole'
-grails.plugin.springsecurity.authority.className = 'Role'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.pismo.security.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.pismo.security.UserRole'
+grails.plugin.springsecurity.authority.className = 'com.pismo.security.Role'
 grails.plugin.springsecurity.useSwitchUserFilter = true
 grails.plugin.springsecurity.password.algorithm = 'SHA-256'
-grails.plugin.springsecurity.basic.realmName = "Gestão Fundo Dema"
-/*grails.plugin.console.baseUrl = "http://35.198.16.201/testePismo"*/
+grails.plugin.springsecurity.basic.realmName = "Teste Pismo"
 
-grails.plugin.console.enabled = true //habilita o console para todos os enviroments
+grails.plugin.springsecurity.useSecurityEventListener = true
+grails.plugin.springsecurity.onAbstractAuthenticationFailureEvent = { e, appCtx ->
+	println "\nERROR auth failed for user $e.authentication.name: $e.exception.message\n"
+}
+
+
+grails.plugin.console.enabled = true
 
 grails.databinding.dateFormats = ['dd/MM/yyyy', 'yyyy-MM-dd HH:mm:ss.S', "yyyy-MM-dd'T'hh:mm:ss'Z'"]
 grails.plugin.springsecurity.roleHierarchy = '''
@@ -37,10 +42,12 @@ grails.plugin.springsecurity.interceptUrlMap = [
         [pattern: '/**/favicon.ico',        access: ['permitAll']],
         [pattern: '/login/**',              access: ['permitAll']],
         [pattern: '/logout/**',             access: ['permitAll']],
-		[pattern: '/transaction/**',        access: ['permitAll']],
-		[pattern: '/transactions/**',       access: ['permitAll']],
-		[pattern: '/payment/**',            access: ['permitAll']],
-		[pattern: '/payments/**',           access: ['permitAll']],
+		[pattern: '/transaction/**',        access: ['ROLE_API']],
+		[pattern: '/account/**',        	access: ['ROLE_API']],
+		[pattern: '/accounts/**',        	access: ['ROLE_API']],
+		[pattern: '/transactions/**',       access: ['ROLE_API']],
+		[pattern: '/payment/**',            access: ['ROLE_API']],
+		[pattern: '/payments/**',           access: ['ROLE_API']],
 		[pattern: '/console/**',        	access: ['ROLE_SUPORTE']],
 		[pattern: '/static/console/**',     access: ['ROLE_SUPORTE']]
 

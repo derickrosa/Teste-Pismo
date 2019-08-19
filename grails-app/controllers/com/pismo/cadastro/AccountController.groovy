@@ -1,7 +1,6 @@
 package com.pismo.cadastro
 
-import com.pismo.cadastro.Account
-import com.pismo.cadastro.AccountCommand
+
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.http.HttpStatus
@@ -10,8 +9,11 @@ import org.springframework.web.bind.annotation.*
 class AccountController {
 
     def accountService
+    static responseFormats = ['json']
+
     @Secured(["ROLE_API"])
     def limits() {
+        println "log de acesso"
         HashMap jsonMap = new HashMap()
         List listOfAccounts = Account.list()
         jsonMap.accounts = listOfAccounts.collect { Account account ->
