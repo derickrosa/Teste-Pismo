@@ -35,8 +35,9 @@ Para autenticação foi utilizado o Basic Authentication, que é o sistema de au
 
 Authorization: Basic {credenciais em base 64 no formato usuário:senha}
 
-usuário: "api.pismo"
-senha: "pismoapi"
+**Usuário: "api.pismo"
+
+**Senha: "pismoapi"
 
 ## Decisões de Negócio
 
@@ -109,7 +110,3 @@ Foi criado uma classe extrata "PaymentTransaction" para armazenar as informaçõ
 + #### Testes
 
 Por conta do pouco tempo de desenvolvimento disponível, a aplicação não possui testes automatizados. Obviamente, em uma aplicação que realmente fosse para produção, a presença de testes seria indispensável.
-
-+ #### Segurança
-
-O mesmo é valído para a questão da segurança, devido ao tempo não houve implementação nesse sentido. APIs desprotegidas ou hackeadas são a causa das principais violações de dados, e de suma importância quando se trata de sistemas financeiros.
