@@ -8,15 +8,15 @@ API desenvolvida em Groovy utilizando o framework Grails para simular transaçõ
 
 A aplicação já se encontra disponível para testes no link acima. Caso vocẽ tenha o desejo de executar a aplicação localmente, uma vez clonado, os passos são:
 
-Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
+*Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
 
-Instalar <a href="https://www.postgresql.org/download/">PostgreSQL</a>. Banco padrão: "pismo_development"
+*Instalar <a href="https://www.postgresql.org/download/">PostgreSQL</a>. Banco padrão: "pismo_development"
 
-Git clone do projeto: https://github.com/derickrosa/Teste-Pismo.git
+*Clonar projeto: https://github.com/derickrosa/Teste-Pismo.git
 
-Vá até o diretório da aplicação: ```cd ~/desafioPismo.```
+*Entrar no diretório da aplicação: ```cd ~/desafioPismo.```
 
-Executar o comando ```grails run-app```.
+*Executar o comando ```grails run-app```.
 
 Não há necessidade de criar um arquivo WAR ou executar o deploy da aplicação.
 
@@ -35,9 +35,9 @@ Para autenticação foi utilizado o Basic Authentication, que é o sistema de au
 
 Authorization: Basic {credenciais em base 64 no formato usuário:senha}
 
-**Usuário: "api.pismo"
+**Usuário: "api.pismo"**
 
-**Senha: "pismoapi"
+**Senha: "pismoapi"**
 
 ## Decisões de Negócio
 
