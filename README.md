@@ -34,14 +34,14 @@ Este projeto utiliza controllers para processar e validar as requisições, serv
 
 + #### PATCH => ~/testePismo/accouns/<id>
 Exemplo de entrada:
-  ```{
+  {
 	"available_credit_limit": {
 		"amount": 10
 	},
 	"available_withdrawal_limit": {
 		"amount": 2
 	}
-}```
+}
   
 Este endpoint receberá valores de limite para available_credit_limit e available_withdrawal_limit e abate os respectivos amount dos saldos da conta <id>.
   
