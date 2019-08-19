@@ -84,20 +84,17 @@ class PaymentService {
         }.reverse()
 
         transactionList = transactionList.collect{it.id}
-        println "Lista de transacoes: $transactionList"
         charge(transactionList, paymentTransaction)
         clearParametros()
     }
 
     def charge(List<Long> transactionList, PaymentTransaction paymentTransaction){
-        println "Chegou no charge: $transactionList - pay:$paymentTransaction.amount"
         int idx = 0
         for(Long id in transactionList){
             Transaction transaction = Transaction.get(id)
             def balance = transaction.balance + paymentTransaction.balance
-            println "Chegou no loop inicial: bal: $balance - trns: $transaction.balance  -  pay:$paymentTransaction.balance"
+
             if(balance > 0){
-                println("Balance maior que zero")
                 TransactionPayment transactionPayment = new TransactionPayment()
                 transactionPayment.paymentAmount = transaction.balance
                 transaction.addToBillings(transactionPayment)
@@ -107,9 +104,7 @@ class PaymentService {
                 paymentTransaction.balance = balance
                 transaction.save(failOnError:true)
                 paymentTransaction.save(failOnError:true)
-                println "Chegou no final int: bal: $balance - trns: $transaction.balance  -  pay:$paymentTransaction.balance"
             } else if(balance < 0){
-                println("Balance menor que zero")
                 TransactionPayment transactionPayment = new TransactionPayment()
                 transactionPayment.paymentAmount = paymentTransaction.balance
                 transaction.addToBillings(transactionPayment)
@@ -119,10 +114,8 @@ class PaymentService {
                 transaction.statusTransaction = StatusTransaction.PAID
                 transaction.save(flush: true, failOnError:true)
                 paymentTransaction.save(failOnError:true)
-                println "Cabou pagamentos: bal: $balance - trns: $transaction.balance  -  pay:$paymentTransaction.balance"
                 break
             } else {
-                println("Igual a zero")
                 TransactionPayment transactionPayment = new TransactionPayment()
                 transactionPayment.paymentAmount = paymentTransaction.balance
                 transaction.addToBillings(transactionPayment)
@@ -131,12 +124,10 @@ class PaymentService {
                 transaction.save(flush: true, failOnError:true)
                 paymentTransaction.addToBillings(transactionPayment)
                 paymentTransaction.save(flush: true, failOnError:true)
-                println "Cabou pagamentos: bal: $balance - trns: $transaction.balance  -  pay:$paymentTransaction.balance"
                 break
             }
             transaction.save(flush: true, failOnError:true)
             paymentTransaction.save(flush: true, failOnError:true)
-            println "----"
             idx++
             if(idx % 100 == 0) gormClean()
         }

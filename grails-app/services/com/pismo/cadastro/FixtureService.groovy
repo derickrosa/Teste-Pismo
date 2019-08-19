@@ -36,7 +36,7 @@ class FixtureService {
     }
 
     def setupUsers() {
-        println("CRIANDO USUÁRIOS!!")
+        println("CRIANDO USUÁRIOS BÁSICOS...")
         def roleSuporte = new Role(authority: "ROLE_SUPORTE", nome: "Suporte", descricao: "Suporte Técnico do sistema. Possui controle total do sistema.", nivelAcesso: 0).save()
         def roleApi = new Role(authority: "ROLE_API", nome: "API", descricao: "Acessar a API. Possui acesso às APIs.", nivelAcesso: 1).save()
 

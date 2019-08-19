@@ -4,6 +4,9 @@ class UrlMappings {
 
     static mappings = {
         "/$controller/$action?/$id?(.$format)?"()
+        '/transactions'(controller: 'transaction', action: 'save')
+        '/payments'(controller: 'payment', action: 'save')
         '/accounts'(controller: 'account', action: 'limits')
+        "/accounts/$id"(controller: 'account', action: 'update')
     }
 }

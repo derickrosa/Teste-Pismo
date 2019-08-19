@@ -11,11 +11,9 @@ class TransactionService {
 
     def save(TransactionCommand transactionCommand) {
         Transaction transactionInstance = new Transaction()
-        println "Valor de account $transactionCommand.account_id"
         Account accountInstance = Account.get(transactionCommand.account_id.toLong())
-        println "Achou? $accountInstance"
+
         if(!accountInstance){
-            println "Entrou no que nao tem $accountInstance"
             accountInstance = new Account(-transactionCommand.amount)
         } else{
             accountInstance.availableWithdrawalLimit -= transactionCommand.amount

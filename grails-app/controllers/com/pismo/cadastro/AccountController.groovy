@@ -3,17 +3,22 @@ package com.pismo.cadastro
 
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
+import grails.rest.RestfulController
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
-class AccountController {
+class AccountController extends  RestfulController{
 
     def accountService
     static responseFormats = ['json']
 
+    AccountController() {
+        super(Account)
+    }
+
+
     @Secured(["ROLE_API"])
     def limits() {
-        println "log de acesso"
         HashMap jsonMap = new HashMap()
         List listOfAccounts = Account.list()
         jsonMap.accounts = listOfAccounts.collect { Account account ->
@@ -25,7 +30,6 @@ class AccountController {
     @Secured(["ROLE_API"])
     @RequestMapping(method = RequestMethod.PATCH)
     def update(Long id){
-        println "Chegou aqui: ${id}"
         def json = request.JSON
         def accountCommand = new AccountCommand()
         accountCommand.available_credit_limit = json.available_credit_limit.amount
