@@ -1,15 +1,16 @@
-package testePismo.com.pismo.cadastro
+package com.pismo.cadastro
 
 import com.pismo.cadastro.Account
 import com.pismo.cadastro.AccountCommand
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 class AccountController {
 
     def accountService
-
+    @Secured(["ROLE_API"])
     def limits() {
         HashMap jsonMap = new HashMap()
         List listOfAccounts = Account.list()
@@ -19,6 +20,7 @@ class AccountController {
         render jsonMap as JSON
     }
 
+    @Secured(["ROLE_API"])
     @RequestMapping(method = RequestMethod.PATCH)
     def update(Long id){
         println "Chegou aqui: ${id}"

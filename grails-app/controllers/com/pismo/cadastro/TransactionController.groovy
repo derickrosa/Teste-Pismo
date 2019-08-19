@@ -1,8 +1,7 @@
-package testePismo.com.pismo.cadastro
+package com.pismo.cadastro
 
-import com.pismo.cadastro.Transaction
-import com.pismo.cadastro.TransactionCommand
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.http.HttpStatus
 
 class TransactionController {
@@ -10,6 +9,7 @@ class TransactionController {
     def transactionService
     static allowedMethods = [save: "POST"]
 
+    @Secured(["ROLE_API"])
     def save(){
         try{
             def json = request.JSON

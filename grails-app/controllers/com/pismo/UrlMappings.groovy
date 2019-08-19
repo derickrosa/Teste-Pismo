@@ -1,3 +1,5 @@
+package com.pismo
+
 class UrlMappings {
 
     static mappings = {

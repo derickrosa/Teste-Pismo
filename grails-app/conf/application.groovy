@@ -18,6 +18,9 @@ grails.plugin.springsecurity.basic.realmName = "Gestão Fundo Dema"
 grails.plugin.console.enabled = true //habilita o console para todos os enviroments
 
 grails.databinding.dateFormats = ['dd/MM/yyyy', 'yyyy-MM-dd HH:mm:ss.S', "yyyy-MM-dd'T'hh:mm:ss'Z'"]
+grails.plugin.springsecurity.roleHierarchy = '''
+   ROLE_SUPORTE > ROLE_API
+'''
 
 grails.plugin.springsecurity.filterChain.chainMap = [
 	//Traditional chain
@@ -34,8 +37,6 @@ grails.plugin.springsecurity.interceptUrlMap = [
         [pattern: '/**/favicon.ico',        access: ['permitAll']],
         [pattern: '/login/**',              access: ['permitAll']],
         [pattern: '/logout/**',             access: ['permitAll']],
-		[pattern: '/account/**',            access: ['permitAll']],
-		[pattern: '/accounts/**',           access: ['permitAll']],
 		[pattern: '/transaction/**',        access: ['permitAll']],
 		[pattern: '/transactions/**',       access: ['permitAll']],
 		[pattern: '/payment/**',            access: ['permitAll']],

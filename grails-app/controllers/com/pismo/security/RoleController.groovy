@@ -1,4 +1,4 @@
-package testePismo.com.pismo.security
+package com.pismo.security
 
 import com.pismo.security.Role
 import com.pismo.security.UserRole
