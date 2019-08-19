@@ -12,7 +12,7 @@ Caso vocẽ tenha o desejo de executar a aplicação localmente, os passos são:
 
 * Clonar projeto: https://github.com/derickrosa/Teste-Pismo.git
 
-* Entrar no diretório da aplicação: ```cd ~/desafioPismo.```
+* Entrar no diretório da aplicação: ```cd ~/testePismo.```
 
 * Executar o comando ```grails run-app```.
 
@@ -126,4 +126,4 @@ Foi criado uma classe extrata "PaymentTransaction" para armazenar as informaçõ
 Por conta do pouco tempo de desenvolvimento disponível, a aplicação não possui testes automatizados. Obviamente, em uma aplicação que realmente fosse para produção, a presença de testes seria indispensável.
 
 + #### Testes
-Este projeto representa uma ideia simplificada de uma conta digital e que necessitaria de um refinamento nos processos implementados para uma solução mais robusta e que pudesse ser utilizado no mundo real, podendo conter inclusive interpretações equivocadas por parte do desenvolvedor (eu).
+Este projeto representa uma ideia simplificada de uma conta digital e que necessitaria de um refinamento nos processos implementados para uma solução mais robusta e que pudesse ser utilizado no mundo real, podendo conter inclusive interpretações equivocadas por parte do desenvolvedor (no caso eu).
