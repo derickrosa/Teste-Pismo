@@ -10,13 +10,13 @@ A aplicação já se encontra disponível para testes no link acima. Caso vocẽ
 
 *Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
 
-*Instalar <a href="https://www.postgresql.org/download/">PostgreSQL</a>. Banco padrão: "pismo_development"
+* Instalar <a href="https://www.postgresql.org/download/">PostgreSQL</a>. Banco padrão: "pismo_development"
 
-*Clonar projeto: https://github.com/derickrosa/Teste-Pismo.git
+* Clonar projeto: https://github.com/derickrosa/Teste-Pismo.git
 
-*Entrar no diretório da aplicação: ```cd ~/desafioPismo.```
+* Entrar no diretório da aplicação: ```cd ~/desafioPismo.```
 
-*Executar o comando ```grails run-app```.
+* Executar o comando ```grails run-app```.
 
 Não há necessidade de criar um arquivo WAR ou executar o deploy da aplicação.
 
