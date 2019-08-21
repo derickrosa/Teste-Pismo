@@ -2,19 +2,17 @@
 
 API desenvolvida em Groovy utilizando o framework Grails para simular transações em uma conta digital.
 
-+ Disponível em: [link]
-
 ## Instruções para execução local
 
-A aplicação já se encontra disponível para testes no link acima. Caso vocẽ tenha o desejo de executar a aplicação localmente, uma vez clonado, os passos são:
+Caso vocẽ tenha o desejo de executar a aplicação localmente, os passos são:
 
-*Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
+* Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
 
 * Instalar <a href="https://www.postgresql.org/download/">PostgreSQL</a>. Banco padrão: "pismo_development"
 
 * Clonar projeto: https://github.com/derickrosa/Teste-Pismo.git
 
-* Entrar no diretório da aplicação: ```cd ~/desafioPismo.```
+* Entrar no diretório da aplicação: ```cd ~/testePismo.```
 
 * Executar o comando ```grails run-app```.
 
@@ -28,22 +26,38 @@ A aplicação deverá estar rodando em http://localhost:8080/testePismo.
 Por já estar habituado com a tecnologia e com o intuito de agilizar o desenvolvimento , optei por desenvolver o projeto utilizando o framework Grails versão 3.3.0 com Groovy 2.4.11.
 
 + #### Estrutura do projeto
-Este projeto utiliza controllers para processar e validar as requisições, services para processar os dados e classes para representar os modelos de dados. 
+Este projeto utiliza restful controllers para processar e validar as requisições, services para processar os dados e classes para representar os modelos de dados via hibernate.
 
-+ #### Segurança
-Para autenticação foi utilizado o Basic Authentication, que é o sistema de autenticação mais comum do protocolo HTTP. Este tipo de autenticação foi implementado utilizando o Spring Security e é incluído no header da requisição HTTP dessa maneira:
++ #### Segurança e Autenticação
+Para autenticação foi utilizado Stateless Authentication implementado utilizando o Spring Security.
+Inicialmente é necessário realizar uma requisição de login para gerar um X-Auth-Token.
 
-Authorization: Basic {credenciais em base 64 no formato usuário:senha}
+Endoint: ~/testePismo/login
 
-**Usuário: "api.pismo"**
+Payload:
 
-**Senha: "pismoapi"**
+```{
+    "username": "api.pismo",
+    "password": "pismoapi"
+}
+```
+Resposta com a geração do token de acesso:
+
+<p align="center">
+  <img src="https://github.com/derickrosa/Teste-Pismo/blob/master/token.png">
+</p>
+
+Este token deverá ser incluído no header das futuras requisições sob a key "X-Auth-Token":
+
+<p align="center">
+  <img src="https://github.com/derickrosa/Teste-Pismo/blob/master/envio_requisi%C3%A7%C3%A3o.png">
+</p>
 
 ## Decisões de Negócio
 
 + #### PATCH => ~/testePismo/accounts/<id>
 
-Exemplo de entrada:
+Exemplo de payload:
 
 /testePismo/accounts/1
 
@@ -56,7 +70,7 @@ Exemplo de entrada:
 	}
 }
   
-Este endpoint receberá valores de limite para available_credit_limit e available_withdrawal_limit e abate os respectivos amount dos saldos da conta <id>.
+Este endpoint receberá valores de limite para ```available_credit_limit``` e ```available_withdrawal_limit``` e abate os respectivos "amount" dos saldos da conta <id>.
   
 + #### GET   => ~/testePismo/accounts/limits
 
@@ -64,7 +78,7 @@ Este endpoint retorna uma lista de contas "accounts" com as respectivas informa�
   
 + #### POST  => ~/testePismo/transactions
 
-Exemplo de entrada:
+Exemplo de payload:
 
 ```
 {
@@ -83,7 +97,7 @@ Foi criado um setup no projeto para pré cadastrar os tipos de operação suport
   
 + #### POST  => ~/testePismo/payments
 
-Exemplo de entrada:
+Exemplo de payload:
 ```
 [
 	{
@@ -110,3 +124,6 @@ Foi criado uma classe extrata "PaymentTransaction" para armazenar as informaçõ
 + #### Testes
 
 Por conta do pouco tempo de desenvolvimento disponível, a aplicação não possui testes automatizados. Obviamente, em uma aplicação que realmente fosse para produção, a presença de testes seria indispensável.
+
++ #### Refinamento de Regras de Negócio
+Este projeto representa uma ideia simplificada de uma conta digital e que necessitaria de um refinamento nos processos implementados para uma solução mais robusta e que pudesse ser utilizado no mundo real, podendo conter inclusive interpretações equivocadas por parte do desenvolvedor (no caso eu).
