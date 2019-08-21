@@ -136,14 +136,33 @@ Diretório: /src/test/groovy/com/pismo/cadastro
 Controllers:
 
 * AccountControllerSpec
+
+	* AccountController::limits()
+	* AccountController::update()
+
 * TransactionControllerSpec
+
+	* TransactionController::save()
+
 * PaymentControllerSpec
+
+	* PaymentController::save()
 
 Services
 
 * AccountServiceSpec
+
+	* AccountService::update(AccountCommand accountCommand, Account account)
+	
 * TransactionServiceSpec
+
+	* TransactionService::save(TransactionCommand transactionCommand)
+	
 * PaymentServiceSpec
+
+	* PaymentService::save(TransactionCommand transactionCommand)
+	* PaymentService::getTransactionToPay(PaymentTransaction paymentTransaction)
+	* PaymentService::charge(List<Long> transactionList, PaymentTransaction paymentTransaction)
 
 + #### Integration tests
 
@@ -152,10 +171,6 @@ Diretório: /src/integration-test/groovy/testePismo
 * TransactionApiSpec
 
 ## Possíveis Melhorias
-
-+ #### Testes
-
-Por conta do pouco tempo de desenvolvimento disponível, a aplicação não possui testes automatizados. Obviamente, em uma aplicação que realmente fosse para produção, a presença de testes seria indispensável.
 
 + #### Refinamento de Regras de Negócio
 Este projeto representa uma ideia simplificada de uma conta digital e que necessitaria de um refinamento nos processos implementados para uma solução mais robusta e que pudesse ser utilizado no mundo real, podendo conter inclusive interpretações equivocadas por parte do desenvolvedor (no caso eu).
