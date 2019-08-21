@@ -119,6 +119,32 @@ Foi criado uma classe extrata "PaymentTransaction" para armazenar as informaçõ
   <img src="https://github.com/derickrosa/Teste-Pismo/blob/master/diagrama_classes_account.png">
 </p>
 
+## Testes
+
+Os seguintes testes automatizados foram implementados:
+
++ #### Unit tests
+
+Diretório: /src/test/groovy/com/pismo/cadastro
+
+Controllers:
+
+**AccountControllerSpec**
+**TransactionControllerSpec**
+**PaymentControllerSpec**
+
+Services
+
+**AccountServiceSpec**
+**TransactionServiceSpec**
+**PaymentServiceSpec**
+
++ #### Integration tests
+
+Diretório: /src/integration-test/groovy/testePismo
+
+**TransactionApiSpec**
+
 ## Possíveis Melhorias
 
 + #### Testes
