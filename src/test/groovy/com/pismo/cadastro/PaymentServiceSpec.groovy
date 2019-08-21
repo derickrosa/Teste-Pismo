@@ -36,9 +36,22 @@ class PaymentServiceSpec extends HibernateSpec implements ServiceUnitTest<Paymen
         result.statusTransaction == StatusTransaction.PURCHASED
     }
 
+    void "Test get transactions ToPay"() {
+        given: "Pagamento para ser parametro de busca"
+        PaymentTransaction paymentTransaction = new PaymentTransaction(account: 100, operationType: OperationType.PAGAMENTO, amount: 100, balance: 100, paidDate: new Date())
+        paymentTransaction.save(flush:true)
+
+        when: "Busca transações válidas para seres pagas"
+        List<Long> transactionListIds = service.getTransactionToPay(paymentTransaction)
+
+        then: "Deve retornar uma lista de ids das transações a serem pagas"
+        transactionListIds.size() == 4
+    }
+
     void "Test charge transaction"() {
         given: "Pagamento e lista de transações a serem pagas"
-        PaymentTransaction paymentTransaction = new PaymentTransaction(account: 100, operationType: OperationType.PAGAMENTO, amount: new BigDecimal(100), paidDate: new Date())
+        PaymentTransaction paymentTransaction = new PaymentTransaction(account: 100, operationType: OperationType.PAGAMENTO, amount: 100, balance: 100, paidDate: new Date())
+        paymentTransaction.save(flush:true)
         List<Long> transactions = setupTransactionsMock().collect {it.id}
 
         when: "Realiza o pagamento das transações"
@@ -52,10 +65,10 @@ class PaymentServiceSpec extends HibernateSpec implements ServiceUnitTest<Paymen
     List<Transaction> setupTransactionsMock() {
         Account account = Account.get(100)
         List<Transaction> transactions = []
-        transactions << new Transaction(account: account, operationType: OperationType.SAQUE, amount: 50, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "20/08/2019"))
-        transactions << new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 100, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "15/08/2019"))
-        transactions << new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 150, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "10/08/2019"))
-        transactions << new Transaction(account: account, operationType: OperationType.AVISTA, amount: 200, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "05/08/2019"))
+        transactions << new Transaction(account: account, operationType: OperationType.SAQUE, amount: 50, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "20/08/2019")).save()
+        transactions << new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 100, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "15/08/2019")).save()
+        transactions << new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 150, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "10/08/2019")).save()
+        transactions << new Transaction(account: account, operationType: OperationType.AVISTA, amount: 200, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "05/08/2019")).save()
         transactions
     }
 

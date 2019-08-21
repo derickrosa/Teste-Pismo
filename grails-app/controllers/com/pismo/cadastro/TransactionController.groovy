@@ -23,11 +23,10 @@ class TransactionController extends RestfulController {
             bindData(transactionCommand, json)
             def result = transactionService.validation(transactionCommand)
             if (result?.errors) {
-                println "Erros!!11"
                 render status: HttpStatus.NOT_ACCEPTABLE, text: result as JSON
                 return
             }
-            println "Sucesso"
+
             Transaction instance = transactionService.save(transactionCommand)
             def map = [id: instance.id, eventDate: instance.eventdate, operationType: instance.operationType.name,
                        amount:instance.amount, accountAvailableCreditLimit: instance.account.availableCreditLimit,
@@ -35,7 +34,6 @@ class TransactionController extends RestfulController {
 
             render contentType: 'application/json', status: HttpStatus.CREATED, text: map as JSON
         } catch (Exception e) {
-            println "Erro?"
             log.error("Error:", e)
             def map = [errors: []]
             map.errors << [code: "GENERIC_ERROR"]

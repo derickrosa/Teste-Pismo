@@ -35,7 +35,6 @@ class TransactionApiSpec extends Specification {
 
     def setup() {
         token = login()
-        println "Token de Acesso: $token"
         fixtureService.createAccount()
         fixtureService.setupOperationType()
         fixtureService.createTransactions()
@@ -82,7 +81,6 @@ class TransactionApiSpec extends Specification {
             accept('application/json')
             contentType('application/json')
             json(data)
-            println "Token de Acesso: $token"
             header'X-Auth-Token', token
         }
         then:

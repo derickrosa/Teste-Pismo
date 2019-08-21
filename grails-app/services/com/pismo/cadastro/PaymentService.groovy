@@ -43,42 +43,6 @@ class PaymentService {
     }
 
     List<Long> getTransactionToPay(PaymentTransaction paymentTransaction){
-        //Suporta pagamento customizado de transações específicas por eventDate, dueDate e OperationType
-        /*def hql = '''select t
-                from com.pismo.cadastro.Transaction t
-                where t.operationType.id<>4
-                and t.statusTransaction ='PURCHASED'
-                and t.account= :account '''
-        def pars = [:]
-        if(parametrosCorte['account_id'])
-            pars['account'] = parametrosCorte['account_id']
-        else
-            pars['account'] = paymentTransaction.account
-        if (parametrosCorte['max'])
-            pars['max']=parametrosCorte['max']
-        if (parametrosCorte['eventDate']) {
-            hql += ' and t.eventDate=:eventDate '
-            pars['eventDate'] = parametrosCorte['eventDate']
-        }
-        if (parametrosCorte['dueDate']) {
-            hql += ' and t.dueDate=:dueDate '
-            pars['dueDate'] = parametrosCorte['dueDate']
-        }
-        if (parametrosCorte['operation_type_id']) {
-            hql += ' and t.operation_type_id=:operation_type '
-            pars['operation_type_id'] = parametrosCorte['operation_type_id']
-        }
-
-        log.debug "Obtendo transactions..."
-        log.debug "HQL: $hql"
-        log.debug "PAR: $pars"
-        def transactionList = Transaction.executeQuery(hql, pars).sort{ x, y->
-            if(x.operationType.chargeOrder == y.operationType.chargeOrder){
-                x.eventdate <=> y.eventdate
-            }else{
-                x.operationType.chargeOrder <=> y.operationType.chargeOrder
-            }
-        }.reverse()*/
         def transactionListIds = Transaction.createCriteria().list {
             //createAlias('operationType', 'operation')
             eq('statusTransaction', StatusTransaction.PURCHASED)

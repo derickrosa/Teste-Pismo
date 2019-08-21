@@ -11,7 +11,6 @@ class AccountService {
         account.availableCreditLimit -= accountCommand.available_credit_limit
         account.availableWithdrawalLimit -= accountCommand.available_withdrawal_limit
         account.save(flush:true, failOnError:true)
-        println "P: ${account.properties}"
         account
     }
 
