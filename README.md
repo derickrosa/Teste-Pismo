@@ -129,15 +129,15 @@ Diretório: /src/test/groovy/com/pismo/cadastro
 
 Controllers:
 
-**AccountControllerSpec**
-**TransactionControllerSpec**
-**PaymentControllerSpec**
+* AccountControllerSpec
+* TransactionControllerSpec
+* PaymentControllerSpec
 
 Services
 
-**AccountServiceSpec**
-**TransactionServiceSpec**
-**PaymentServiceSpec**
+* AccountServiceSpec
+* TransactionServiceSpec
+* PaymentServiceSpec
 
 + #### Integration tests
 
