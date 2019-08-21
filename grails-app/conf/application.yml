@@ -110,7 +110,7 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:postgresql://localhost/pismo_development
+            url: jdbc:postgresql://app-db/pismo_development
     test:
         dataSource:
             dbCreate: update

@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app-web:
+    build: ./Docker
+    ports:
+      - "8081:8080"
+    networks:
+      - meu-app
+  app-db:
+    image: postgres:9.4-alpine
+    volumes:
+      - app-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=pismo_development
+    networks:
+      - meu-app
+
+networks:
+  meu-app:
+
+volumes:
+  app-db:
