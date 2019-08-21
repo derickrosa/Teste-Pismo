@@ -8,7 +8,7 @@ class PaymentController {
 
     def paymentService
     def transactionService
-    static allowedMethods = [save: "POST"]
+
 
     def save() {
         try{
@@ -28,7 +28,7 @@ class PaymentController {
             }
             List<PaymentTransaction> instanceList = paymentService.save(paymentCommandList)
             def map = instanceList.collect { it.id }
-            render status: HttpStatus.CREATED, text: map as JSON
+            render contentType: 'application/json', status: HttpStatus.CREATED, text: map as JSON
         } catch (Exception e) {
                 log.error("Error:", e)
                 def map = [errors: []]

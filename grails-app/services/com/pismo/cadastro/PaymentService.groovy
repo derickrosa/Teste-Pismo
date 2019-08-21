@@ -1,12 +1,7 @@
 package com.pismo.cadastro
 
-import com.pismo.cadastro.Account
-import com.pismo.cadastro.OperationType
-import com.pismo.cadastro.PaymentTransaction
-import com.pismo.cadastro.Transaction
-import com.pismo.cadastro.TransactionCommand
-import com.pismo.cadastro.TransactionPayment
 import enums.StatusTransaction
+import org.hibernate.sql.JoinType
 
 class PaymentService {
     def parametrosCorte = [:]
@@ -22,13 +17,16 @@ class PaymentService {
     def save(List<TransactionCommand> paymentCommandList) {
         List<PaymentTransaction> paymentList = []
         paymentCommandList.each{paymentCommand->
-            paymentList << save(paymentCommand)
+            PaymentTransaction paymentTransaction = save(paymentCommand)
+            List<Long> transactionList = getTransactionToPay(paymentTransaction)
+            charge(transactionList, paymentTransaction)
+            paymentList << paymentTransaction
         }
         paymentList
     }
     def save(TransactionCommand transactionCommand){
         PaymentTransaction paymentTransactionInstance = new PaymentTransaction()
-        Account accountInstance = Account.findById(transactionCommand.account_id)
+        Account accountInstance = Account.get(transactionCommand.account_id)
         if(!accountInstance){
             accountInstance = new Account(transactionCommand.amount)
         }
@@ -41,13 +39,12 @@ class PaymentService {
         paymentTransactionInstance.balance = transactionCommand.amount
         accountInstance.addToTransactions(paymentTransactionInstance)
         accountInstance.save(flush: true, failOnError: true)
-        billing(paymentTransactionInstance)
         paymentTransactionInstance
     }
 
-    def billing(PaymentTransaction paymentTransaction){
+    List<Long> getTransactionToPay(PaymentTransaction paymentTransaction){
         //Suporta pagamento customizado de transações específicas por eventDate, dueDate e OperationType
-        def hql = '''select t
+        /*def hql = '''select t
                 from com.pismo.cadastro.Transaction t
                 where t.operationType.id<>4
                 and t.statusTransaction ='PURCHASED'
@@ -81,11 +78,27 @@ class PaymentService {
             }else{
                 x.operationType.chargeOrder <=> y.operationType.chargeOrder
             }
+        }.reverse()*/
+        def transactionListIds = Transaction.createCriteria().list {
+            //createAlias('operationType', 'operation')
+            eq('statusTransaction', StatusTransaction.PURCHASED)
+            eq('account',paymentTransaction.account)
+            ne('operationType',OperationType.PAGAMENTO)
+            /*projections{
+                property('id')
+            }*/
+            /*order('operation.chargeOrder')
+            order('eventdate', 'asc')*/
+        }
+        transactionListIds = transactionListIds.sort{ x, y->
+            if(x.operationType.chargeOrder == y.operationType.chargeOrder){
+                x.eventdate <=> y.eventdate
+            }else{
+                x.operationType.chargeOrder <=> y.operationType.chargeOrder
+            }
         }.reverse()
-
-        transactionList = transactionList.collect{it.id}
-        charge(transactionList, paymentTransaction)
         clearParametros()
+        transactionListIds.collect {it.id}
     }
 
     def charge(List<Long> transactionList, PaymentTransaction paymentTransaction){
@@ -138,7 +151,6 @@ class PaymentService {
         account.availableCreditLimit += paymentTransaction.amount
         account.availableWithdrawalLimit += paymentTransaction.amount
         account.save(flush: true, failOnError: true)
-
     }
 
     def gormClean(Boolean flush = true) {

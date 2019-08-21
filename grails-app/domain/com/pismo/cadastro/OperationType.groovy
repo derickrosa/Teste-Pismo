@@ -21,7 +21,7 @@ class OperationType {
         name
     }
 
-    static getA_VISTA() {
+    static getAVISTA() {
         OperationType.get(1)
     }
     static getPARCELADA() {

@@ -2,7 +2,6 @@ package com.pismo.cadastro
 
 
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -23,7 +22,7 @@ class AccountController extends  RestfulController{
         jsonMap.accounts = listOfAccounts.collect { Account account ->
             return [id: account.id, availableCreditLimit: account.availableCreditLimit, availableWithdrawalLimit: account.availableWithdrawalLimit]
         }
-        render jsonMap as JSON
+        render contentType: 'application/json', jsonMap as JSON
     }
 
     @RequestMapping(method = RequestMethod.PATCH)
@@ -40,6 +39,6 @@ class AccountController extends  RestfulController{
         Account account = Account.get(id)
         Account accountInstance = accountService.update(accountCommand, account)
         def map = [id: accountInstance.id, availableCreditLimit: accountInstance.availableCreditLimit, availableWithdrawalLimit: accountInstance.availableWithdrawalLimit]
-        render status: HttpStatus.OK, text: map as JSON
+        render contentType: 'application/json', status: HttpStatus.OK, text: map as JSON
     }
 }

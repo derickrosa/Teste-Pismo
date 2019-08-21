@@ -7,11 +7,12 @@ import com.pismo.cadastro.TransactionCommand
 import grails.validation.ValidationException
 import org.springframework.validation.FieldError
 
+
 class TransactionService {
 
-    def save(TransactionCommand transactionCommand) {
+    Transaction save(TransactionCommand transactionCommand) {
         Transaction transactionInstance = new Transaction()
-        Account accountInstance = Account.get(transactionCommand.account_id.toLong())
+        Account accountInstance = Account.get(transactionCommand.account_id)
 
         if(!accountInstance){
             accountInstance = new Account(-transactionCommand.amount)

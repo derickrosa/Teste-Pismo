@@ -9,8 +9,6 @@ import grails.gorm.transactions.Transactional
 
 @Transactional
 class FixtureService {
-
-    def springSecurityService
     def setupOperationType() {
         log.debug("Criando instâncias pré-configuradas de com.pismo.cadastro.OperationType")
         if (!OperationType.get(1)) {
@@ -33,6 +31,29 @@ class FixtureService {
             operationType.id=4
             operationType.save(failOnError:true, flush:true)
         }
+    }
+
+    void createAccount(){
+        if(!Account.findById(100)) {
+            Account account = new Account(200)
+            account.id = 100
+            account.save(flush: true)
+        }
+    }
+
+    void createPagamento(Long id = 100){
+        Account account = Account.get(id)
+        PaymentTransaction paymentTransaction = new PaymentTransaction(account: id, operationType: OperationType.PAGAMENTO, amount: new BigDecimal(100), paidDate: new Date())
+    }
+
+    void createTransactions(Long id = 100) {
+        Account account = Account.get(id)
+        Account.saveAll(
+            new Transaction(account: account, operationType: OperationType.SAQUE, amount: 50, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "20/08/2019")),
+            new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 100, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "15/08/2019")),
+            new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 150, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "10/08/2019")),
+            new Transaction(account: account, operationType: OperationType.AVISTA, amount: 200, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "05/08/2019"))
+        )
     }
 
     def setupUsers() {

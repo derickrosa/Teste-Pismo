@@ -2,6 +2,7 @@ package com.pismo.cadastro
 
 import enums.StatusTransaction
 
+@grails.persistence.Entity
 class Transaction {
     Date lastUpdated = new Date()
 

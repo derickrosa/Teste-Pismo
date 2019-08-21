@@ -61,6 +61,8 @@ dependencies {
     compile 'org.grails.plugins:quartz:2.0.12'
     compile "org.grails.plugins:export:2.0.0"
     compile "org.grails.plugins:excel-export:2.1"
+    compile "org.grails:grails-plugin-rest"
+    compile('org.apache.httpcomponents:httpclient:4.5.3')
     profile "org.grails.profiles:web"
 
     runtime 'org.grails.plugins:grails-console:2.1.1'
@@ -73,6 +75,7 @@ dependencies {
     testCompile "org.grails:grails-web-testing-support"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+    testCompile "org.grails:grails-datastore-rest-client"
 }
 
 bootRun {

@@ -10,7 +10,8 @@ class AccountService {
     Account update(AccountCommand accountCommand, Account account) {
         account.availableCreditLimit -= accountCommand.available_credit_limit
         account.availableWithdrawalLimit -= accountCommand.available_withdrawal_limit
-        account.save()
+        account.save(flush:true, failOnError:true)
+        println "P: ${account.properties}"
         account
     }
 
