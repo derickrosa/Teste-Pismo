@@ -2,6 +2,12 @@
 
 API desenvolvida em Groovy utilizando o framework Grails para simular transações em uma conta digital.
 
+## Instruções para execução com Docker
+
+* Entrar no diretório da aplicação: ```cd ~/testePismo.```
+* Executar o comando:```docker-compose up -d```
+* A aplicação deverá estar rodando em: http://localhost:8081/testepismo/
+
 ## Instruções para execução local
 
 Caso vocẽ tenha o desejo de executar a aplicação localmente, os passos são:
@@ -18,7 +24,7 @@ Caso vocẽ tenha o desejo de executar a aplicação localmente, os passos são:
 
 Não há necessidade de criar um arquivo WAR ou executar o deploy da aplicação.
 
-A aplicação deverá estar rodando em http://localhost:8080/testePismo.
+A aplicação deverá estar rodando em: http://localhost:8080/testePismo.
 
 ## Decisões de projeto
 
@@ -143,7 +149,7 @@ Services
 
 Diretório: /src/integration-test/groovy/testePismo
 
-**TransactionApiSpec**
+* TransactionApiSpec
 
 ## Possíveis Melhorias
 
