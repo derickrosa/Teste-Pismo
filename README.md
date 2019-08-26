@@ -61,6 +61,9 @@ Este token deverá ser incluído no header das futuras requisições sob a key "
 
 ## Decisões de Negócio
 
+**Obs: se estiver rodando o arquivo no Docker atenção, os endpoints estarão acessíveis em "http://localhost:8081/testepismo/" (tudo minúsculo, "testepismo" ao invés de "testePismo").
+**
+
 + #### PATCH => ~/testePismo/accounts/<id>
 
 Exemplo de payload:
