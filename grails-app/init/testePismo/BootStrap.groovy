@@ -1,7 +1,7 @@
 package testePismo
 
-import com.pismo.cadastro.OperationType
-import com.pismo.security.Role
+import api.v1.OperationType
+import api.security.Role
 
 
 class BootStrap {

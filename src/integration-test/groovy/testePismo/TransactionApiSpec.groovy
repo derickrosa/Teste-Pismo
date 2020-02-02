@@ -1,10 +1,9 @@
 package testePismo
 
-import com.pismo.cadastro.Account
+import api.cadastro.Account
 import grails.testing.mixin.integration.Integration
 import grails.plugins.rest.client.RestBuilder
 import grails.transaction.Rollback
-import net.sf.json.JSON
 import org.apache.http.client.HttpClient
 import org.apache.http.impl.client.HttpClientBuilder
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,10 +17,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
-import com.pismo.cadastro.FixtureService
+import api.cadastro.FixtureService
 import spock.lang.Shared
-import grails.converters.JSON
-
 
 @Integration
 @Rollback
