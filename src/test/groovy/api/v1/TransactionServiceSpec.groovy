@@ -69,6 +69,24 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         account.availableWithdrawalLimit == 400.0
     }
 
+    void "test creating payment transaction"() {
+        given:
+        Map params = ["account_id":account.id, "operation_type_id": 4 , "amount": 100.0]
+
+        when:
+        def instance = service.create(params)
+
+        then:
+        Transaction.count() == 1
+
+        and: 'should return a Transaction'
+        instance instanceof Transaction
+
+        and: 'should write down the account available credit and withdrawal limits'
+        account.availableCreditLimit == 1000.0
+        account.availableWithdrawalLimit == 500.0
+    }
+
     void "test return transaction list ordered by chargeOrder and eventDate"() {
         given:
         new Transaction(
