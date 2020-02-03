@@ -9,6 +9,28 @@ class Account {
     static constraints = {
         availableCreditLimit scale: 2
         availableWithdrawalLimit scale: 2
+
+        availableCreditLimit validator: { val, obj, errors ->
+            if ( val == null ) {
+                return false
+            }
+            if (val < 0.0) {
+                errors.rejectValue('availableCreditLimit', 'balance.insufficient')
+                return false
+            }
+            true
+        }
+
+        availableWithdrawalLimit validator: { val, obj, errors ->
+            if ( val == null ) {
+                return false
+            }
+            if (val < 0.0) {
+                errors.rejectValue('availableWithdrawalLimit', 'balance.insufficient')
+                return false
+            }
+            true
+        }
     }
 
     void addAvailableCreditLimit(BigDecimal amount){

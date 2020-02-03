@@ -59,6 +59,41 @@ class AccountSpec extends Specification implements DomainUnitTest<Account> {
         domain.errors['availableWithdrawalLimit'].code == 'nullable'
     }
 
+    void 'test availableCreditLimit validation'() {
+        when:
+        domain.availableCreditLimit = value
+
+        then:
+        expected == domain.validate(['availableCreditLimit'])
+        domain.errors['availableCreditLimit']?.code == expectedErrorCode
+
+        where:
+        value                   | expected | expectedErrorCode
+        null                    | false    | 'nullable'
+        0                       | true     | null
+        0.5                     | true     | null
+        1000                    | true     | null
+        -90.5                   | false    | 'balance.insufficient'
+    }
+
+    void 'test availableWithdrawalLimit validation'() {
+        when:
+        domain.availableWithdrawalLimit = value
+
+        then:
+        expected == domain.validate(['availableWithdrawalLimit'])
+        domain.errors['availableWithdrawalLimit']?.code == expectedErrorCode
+
+        where:
+        value                   | expected | expectedErrorCode
+        null                    | false    | 'nullable'
+        0                       | true     | null
+        0.5                     | true     | null
+        1000                    | true     | null
+        -90.5                   | false    | 'balance.insufficient'
+    }
+
+
     void "test addAvailableCreditLimit()"() {
         setup:
         def account = new Account(availableCreditLimit: 800.00).save()
