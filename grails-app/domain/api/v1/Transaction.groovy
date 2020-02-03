@@ -6,7 +6,7 @@ class Transaction {
 
     BigDecimal amount
     BigDecimal balance
-    Date eventdate = new Date()
+    Date eventDate = new Date()
     Date dueDate
 
     OperationType operationType
@@ -21,8 +21,8 @@ class Transaction {
     }
 
     static mapping = {
-        eventdate type: 'date'
+        eventDate type: 'date'
         id generator: 'sequence', params: [sequence: 'transaction_seq']
-        eventdate index: 'idx_transaction_eventDate'
+        eventDate index: 'idx_transaction_eventDate'
     }
 }

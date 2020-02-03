@@ -9,7 +9,14 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
 
     void "test basic persistence mocking"() {
         setup:
-        new OperationType(description: 'COMPRA A VISTA', chargeOrder: 2).save()
+        def operationTypeDebit = new OperationType(id: 1, description: 'COMPRA A VISTA', chargeOrder: 2)
+        operationTypeDebit.id = 1
+        operationTypeDebit.save()
+
+        def operationTypeWithdrawal = new OperationType(description: 'SAQUE', chargeOrder: 0)
+        operationTypeWithdrawal.id = 3
+        operationTypeWithdrawal.save()
+
         new OperationType(description: 'SAQUE', chargeOrder: 0).save()
 
         expect:
@@ -68,7 +75,9 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
 
     void "test getAVISTA"() {
         setup:
-        def operationType = new OperationType(description: 'COMPRA A VISTA', chargeOrder: 2).save()
+        def operationType = new OperationType(id: 1, description: 'COMPRA A VISTA', chargeOrder: 2)
+        operationType.id = 1
+        operationType.save()
 
         expect:
         OperationType.AVISTA == operationType
@@ -76,7 +85,9 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
 
     void "test getPARCELADA"() {
         setup:
-        def operationType = new OperationType(description: 'COMPRA PARCELADA', chargeOrder: 1).save()
+        def operationType = new OperationType(description: 'COMPRA PARCELADA', chargeOrder: 1)
+        operationType.id = 2
+        operationType.save()
 
         expect:
         OperationType.PARCELADA == operationType
@@ -84,7 +95,9 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
 
     void "test getSAQUE"() {
         setup:
-        def operationType = new OperationType(description: 'SAQUE', chargeOrder: 0).save()
+        def operationType = new OperationType(description: 'SAQUE', chargeOrder: 0)
+        operationType.id = 3
+        operationType.save()
 
         expect:
         OperationType.SAQUE == operationType
@@ -92,7 +105,9 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
 
     void "test getPAGAMENTO"() {
         setup:
-        def operationType = new OperationType(description: 'PAGAMENTO', chargeOrder: 0).save()
+        def operationType = new OperationType(description: 'PAGAMENTO', chargeOrder: 0)
+        operationType.id = 4
+        operationType.save()
 
         expect:
         OperationType.PAGAMENTO == operationType
@@ -101,7 +116,9 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
     def "operationType's description unique constraint"() {
 
         when: 'You instantiate a operationType with description which has been never used before'
-        def operationType = new OperationType(description: 'SAQUE', chargeOrder: 0).save()
+        def operationType = new OperationType(description: 'SAQUE', chargeOrder: 0)
+        operationType.id = 3
+        operationType.save()
 
         then: 'operationType is valid instance'
         operationType.validate()

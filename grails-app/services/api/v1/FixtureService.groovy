@@ -43,10 +43,10 @@ class FixtureService {
     void createTransactions(Long id = 100) {
         Account account = Account.get(id)
         Account.saveAll(
-            new Transaction(account: account, operationType: OperationType.SAQUE, amount: 50, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "20/08/2019")),
-            new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 100, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "15/08/2019")),
-            new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 150, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "10/08/2019")),
-            new Transaction(account: account, operationType: OperationType.AVISTA, amount: 200, balance: 200, eventdate: Date.parse("dd/MM/yyyy", "05/08/2019"))
+            new Transaction(account: account, operationType: OperationType.SAQUE, amount: 50, balance: 200, eventDate: Date.parse("dd/MM/yyyy", "20/08/2019")),
+            new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 100, balance: 200, eventDate: Date.parse("dd/MM/yyyy", "15/08/2019")),
+            new Transaction(account: account, operationType: OperationType.PARCELADA, amount: 150, balance: 200, eventDate: Date.parse("dd/MM/yyyy", "10/08/2019")),
+            new Transaction(account: account, operationType: OperationType.AVISTA, amount: 200, balance: 200, eventDate: Date.parse("dd/MM/yyyy", "05/08/2019"))
         )
     }
 

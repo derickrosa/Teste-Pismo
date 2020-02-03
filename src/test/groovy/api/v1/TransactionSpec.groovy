@@ -50,7 +50,7 @@ class TransactionSpec extends Specification implements DomainUnitTest<Transactio
         expect:
         domain != null
         domain.amount == null
-        domain.eventdate.toString() == new Date().toString()
+        domain.eventDate.toString() == new Date().toString()
         System.identityHashCode(domain) != id
     }
 
@@ -82,11 +82,11 @@ class TransactionSpec extends Specification implements DomainUnitTest<Transactio
 
     void 'test eventdate cannot be null'() {
         when:
-        domain.eventdate = null
+        domain.eventDate = null
 
         then:
-        !domain.validate(['eventdate'])
-        domain.errors['eventdate'].code == 'nullable'
+        !domain.validate(['eventDate'])
+        domain.errors['eventDate'].code == 'nullable'
     }
 
     void 'test account cannot be null'() {

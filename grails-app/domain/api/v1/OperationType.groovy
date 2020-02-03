@@ -9,6 +9,7 @@ class OperationType {
     }
 
     static mapping = {
+        id generator: 'assigned'
         description type:'text'
     }
 
@@ -17,15 +18,15 @@ class OperationType {
     }
 
     static getAVISTA() {
-        OperationType.findByDescription('COMPRA A VISTA')
+        OperationType.get(1)
     }
     static getPARCELADA() {
-        OperationType.findByDescription('COMPRA PARCELADA')
+        OperationType.get(2)
     }
     static getSAQUE() {
-        OperationType.findByDescription('SAQUE')
+        OperationType.get(3)
     }
     static getPAGAMENTO() {
-        OperationType.findByDescription('PAGAMENTO')
+        OperationType.get(4)
     }
 }
