@@ -1,6 +1,5 @@
 package api.v1
 
-import grails.testing.gorm.DataTest
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
@@ -26,21 +25,30 @@ class AccountControllerSpec extends Specification implements ControllerUnitTest<
     }
 
     void "test save action"() {
-        given:
-        BigDecimal availableCreditLimit = 1000.00
-        BigDecimal availableWithdrawalLimit = 50.00
+        setup:
+        BigDecimal availableCreditLimit = 1000.0
+        BigDecimal availableWithdrawalLimit = 500.0
+        Long id = 1L
+        Account account = new Account(availableCreditLimit: availableCreditLimit, availableWithdrawalLimit: availableWithdrawalLimit)
+        account.metaClass.id = id
 
         controller.accountService = Stub(AccountService) {
-            create(_, _) >> new Account(availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00)
+            create(_) >> account
         }
 
         when:
         request.method = 'POST'
-        request.json = [availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00]
+        request.contentType = JSON_CONTENT_TYPE
+        request.json = [availableCreditLimit: availableCreditLimit, availableWithdrawalLimit: availableWithdrawalLimit]
 
         controller.save()
 
-        then: 'a found response code is used'
+        then: 'a created response code is used'
         response.status == 201
+
+        and: 'a json response with correct data is returned'
+        response.json.id == id
+        response.json.availableCreditLimit == availableCreditLimit
+        response.json.availableWithdrawalLimit == availableWithdrawalLimit
     }
 }

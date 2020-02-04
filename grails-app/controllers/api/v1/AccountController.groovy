@@ -25,8 +25,8 @@ class AccountController {
         }
 
 
-        def map = [id: accountInstance.id, accountAvailableCreditLimit: accountInstance.availableCreditLimit,
-                   accountAvailableWithdrawalLimit: accountInstance.availableWithdrawalLimit]
+        def map = [id: accountInstance.id, availableCreditLimit: accountInstance.availableCreditLimit,
+                   availableWithdrawalLimit: accountInstance.availableWithdrawalLimit]
 
         render contentType: 'application/json', status: HttpStatus.CREATED, text: map as JSON
     }
