@@ -82,4 +82,6 @@ class PaymentServiceSpec  extends Specification implements ServiceUnitTest<Payme
         orderedTransactionsList[2].balance == -18.7
         payment.balance == 0
     }
+
+
 }
