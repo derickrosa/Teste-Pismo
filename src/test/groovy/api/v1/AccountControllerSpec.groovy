@@ -39,7 +39,7 @@ class AccountControllerSpec extends Specification implements ControllerUnitTest<
         when:
         request.method = 'POST'
         request.contentType = JSON_CONTENT_TYPE
-        request.json = [availableCreditLimit: availableCreditLimit, availableWithdrawalLimit: availableWithdrawalLimit]
+        request.json = [available_credit_limit: availableCreditLimit, available_withdrawal_limit: availableWithdrawalLimit]
 
         controller.save()
 
@@ -50,5 +50,44 @@ class AccountControllerSpec extends Specification implements ControllerUnitTest<
         response.json.id == id
         response.json.availableCreditLimit == availableCreditLimit
         response.json.availableWithdrawalLimit == availableWithdrawalLimit
+    }
+
+    void "test update action"() {
+        setup:
+        BigDecimal availableCreditLimit = 1000.0
+        BigDecimal availableWithdrawalLimit = 500.0
+        BigDecimal amount = 100.0
+
+        Long id = 1L
+        Account account = new Account(availableCreditLimit: availableCreditLimit, availableWithdrawalLimit: availableWithdrawalLimit)
+        account.metaClass.id = id
+
+        Account account_updated = new Account(availableCreditLimit: availableCreditLimit + amount, availableWithdrawalLimit: availableWithdrawalLimit + amount)
+        account_updated.metaClass.id = id
+
+        Account.metaClass.'static'.get = {
+            account
+        }
+
+        controller.accountService = Stub(AccountService) {
+            update(_,_) >> account_updated
+        }
+
+        when:
+        request.method = 'POST'
+        request.contentType = JSON_CONTENT_TYPE
+        request.id = id
+        request.json = [available_credit_limit: amount, available_withdrawal_limit: amount]
+
+        controller.update()
+
+        then: 'a ok response code is used'
+        response.status == 200
+
+        and: 'a json response with correct data is returned'
+        response.json.id == id
+        response.json.availableCreditLimit == availableCreditLimit + amount
+        response.json.availableWithdrawalLimit == availableWithdrawalLimit + amount
+
     }
 }

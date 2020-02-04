@@ -35,10 +35,13 @@ class AccountServiceSpec  extends Specification implements ServiceUnitTest<Accou
         Map params = ["available_credit_limit":["amount":123.45], "available_withdrawal_limit":["amount":123.45]]
 
         when:
-        service.update(account, params)
+        def instance = service.update(account, params)
 
         then:
         account.availableCreditLimit == 1123.45
         account.availableWithdrawalLimit == 623.45
+
+        and:
+        instance instanceof Account
     }
 }

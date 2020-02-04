@@ -14,7 +14,7 @@ class AccountService {
         account.save()
     }
 
-    Boolean update(Account account, Map params) {
+    Account update(Account account, Map params) {
         account.addAvailableCreditLimit(params.available_credit_limit?.amount)
         account.addAvailableWithdrawalLimit(params.available_withdrawal_limit?.amount)
 
