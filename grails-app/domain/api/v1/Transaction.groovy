@@ -15,9 +15,27 @@ class Transaction {
 
 
     static constraints = {
-        amount scale: 2
-        balance scale: 2
         dueDate nullable: true
+        amount scale: 2, validator: { val, obj, errors ->
+            if ( val == null ) {
+                return false
+            }
+            if (val < 0.0 && obj.operationType == OperationType.PAGAMENTO) {
+                errors.rejectValue('amount', 'amount.invalid')
+                return false
+            }
+            true
+        }
+        balance scale: 2, validator: { val, obj, errors ->
+            if ( val == null ) {
+                return false
+            }
+            if (val < 0.0 && obj.operationType == OperationType.PAGAMENTO) {
+                errors.rejectValue('balance', 'balance.invalid')
+                return false
+            }
+            true
+        }
     }
 
     static mapping = {

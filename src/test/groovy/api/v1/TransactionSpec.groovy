@@ -54,6 +54,44 @@ class TransactionSpec extends Specification implements DomainUnitTest<Transactio
         System.identityHashCode(domain) != id
     }
 
+    void 'test amount cannot be negative'() {
+        when: 'operationType is PAYMENT'
+        domain.amount = value
+        domain.operationType = OperationType.PAGAMENTO
+
+
+        then:
+        expected == domain.validate(['amount'])
+        domain.errors['amount']?.code == expectedErrorCode
+
+        where:
+        value                   | expected | expectedErrorCode
+        null                    | false    | 'nullable'
+        0                       | true     | null
+        0.5                     | true     | null
+        1000                    | true     | null
+        -100.0                  | false    | 'amount.invalid'
+    }
+
+    void 'test balance cannot be negative'() {
+        when: 'operationType is PAYMENT'
+        domain.balance = value
+        domain.operationType = OperationType.PAGAMENTO
+
+
+        then:
+        expected == domain.validate(['balance'])
+        domain.errors['balance']?.code == expectedErrorCode
+
+        where:
+        value                   | expected | expectedErrorCode
+        null                    | false    | 'nullable'
+        0                       | true     | null
+        0.5                     | true     | null
+        1000                    | true     | null
+        -100.0                  | false    | 'balance.invalid'
+    }
+
     void 'test dueDate can be null'() {
         when:
         domain.dueDate = null
