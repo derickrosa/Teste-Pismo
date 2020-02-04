@@ -43,4 +43,11 @@ class Transaction {
         id generator: 'sequence', params: [sequence: 'transaction_seq']
         eventDate index: 'idx_transaction_eventDate'
     }
+
+    def beforeInsert() {
+        if( this.operationType != OperationType.PAGAMENTO ) {
+            this.amount *= -1
+            this.balance *= -1
+        }
+    }
 }

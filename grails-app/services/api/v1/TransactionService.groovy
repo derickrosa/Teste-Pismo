@@ -12,9 +12,9 @@ class TransactionService {
         Transaction transaction = new Transaction(
                 account: account,
                 operationType: operationType,
-                amount: -params.amount,
-                balance: -params.amount
-        ).save(failOnError: true)
+                amount: params.amount,
+                balance: params.amount
+        ).save(failOnError: true, flush: true)
 
         if(operationType  == OperationType.PAGAMENTO) return transaction
 

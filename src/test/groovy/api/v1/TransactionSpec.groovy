@@ -6,24 +6,31 @@ import spock.lang.Specification
 
 class TransactionSpec extends Specification implements DomainUnitTest<Transaction> {
     @Shared int id
+    @Shared Account account
+
+    def setup (){
+        def operationTypeDebit = new OperationType(description: 'COMPRA A VISTA', chargeOrder: 2)
+        operationTypeDebit.id = 1
+        operationTypeDebit.save()
+
+
+        account =  new Account(availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00).save()
+    }
 
     void "test basic persistence mocking"() {
         setup:
-        def operationType = new OperationType(description: 'SAQUE', chargeOrder: 0).save()
-        def account =  new Account(availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00).save()
-
         new Transaction(
-                amount: -50.0,
-                balance: -50.0,
+                amount: 50.0,
+                balance: 50.0,
                 account: account,
-                operationType: operationType
+                operationType: OperationType.AVISTA
         ).save(failOnError: true)
 
         new Transaction(
-                amount: -23.50,
-                balance: -23.50,
+                amount: 23.50,
+                balance: 23.50,
                 account: account,
-                operationType: operationType
+                operationType: OperationType.AVISTA
         ).save(failOnError: true)
 
 

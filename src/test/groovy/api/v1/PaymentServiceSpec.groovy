@@ -37,28 +37,28 @@ class PaymentServiceSpec  extends Specification implements ServiceUnitTest<Payme
         given:
         List<Transaction> orderedTransactionsList = []
         orderedTransactionsList << new Transaction(
-                amount: -50.0,
-                balance: -50.0,
+                amount: 50.0,
+                balance: 50.0,
                 account: account,
                 operationType: OperationType.SAQUE,
                 eventDate: Date.parse("dd/MM/yyyy", "05/04/2017")
-        ).save(failOnError: true)
+        ).save(failOnError: true, flush: true)
 
         orderedTransactionsList << new Transaction(
-                amount: -23.50,
-                balance: -23.50,
+                amount: 23.50,
+                balance: 23.50,
                 account: account,
                 operationType: OperationType.AVISTA,
                 eventDate: Date.parse("dd/MM/yyyy", "10/04/2017")
-        ).save(failOnError: true)
+        ).save(failOnError: true, flush: true)
 
         orderedTransactionsList << new Transaction(
-                amount: -18.7,
-                balance: -18.7,
+                amount: 18.7,
+                balance: 18.7,
                 account: account,
                 operationType: OperationType.AVISTA,
                 eventDate: Date.parse("dd/MM/yyyy", "30/04/2017")
-        ).save(failOnError: true)
+        ).save(failOnError: true, flush: true)
 
 
         Transaction payment = new Transaction(
@@ -67,7 +67,7 @@ class PaymentServiceSpec  extends Specification implements ServiceUnitTest<Payme
                 account: account,
                 operationType: OperationType.PAGAMENTO,
                 eventDate: Date.parse("dd/MM/yyyy", "30/04/2017")
-        ).save(failOnError: true)
+        ).save(failOnError: true, flush: true)
 
 
         when:

@@ -7,7 +7,6 @@ import spock.lang.Specification
 
 class TransactionServiceSpec  extends Specification implements ServiceUnitTest<TransactionService>, DataTest {
     @Shared Account account
-    @Shared OperationType operationType
 
     void setupSpec() {
         mockDomains(Account, OperationType, Transaction)
@@ -46,6 +45,12 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         and: 'should return a Transaction'
         instance instanceof Transaction
 
+        and: 'should store the correct information'
+        instance.amount == -params.amount
+        instance.balance == -params.amount
+        instance.account.id == params.account_id
+        instance.operationType.id == params.operation_type_id
+
         and: 'should write down only the account available credit limit'
         account.availableCreditLimit == 900.0
         account.availableWithdrawalLimit == 500.0
@@ -64,6 +69,12 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         and: 'should return a Transaction'
         instance instanceof Transaction
 
+        and: 'should store the correct information'
+        instance.amount == -params.amount
+        instance.balance == -params.amount
+        instance.account.id == params.account_id
+        instance.operationType.id == params.operation_type_id
+
         and: 'should write down the account available credit and withdrawal limits'
         account.availableCreditLimit == 900.0
         account.availableWithdrawalLimit == 400.0
@@ -81,6 +92,12 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
 
         and: 'should return a Transaction'
         instance instanceof Transaction
+
+        and: 'should store the correct information'
+        instance.amount == params.amount
+        instance.balance == params.amount
+        instance.account.id == params.account_id
+        instance.operationType.id == params.operation_type_id
 
         and: 'should write down the account available credit and withdrawal limits'
         account.availableCreditLimit == 1000.0
@@ -106,8 +123,8 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         ).save(failOnError: true)
 
         new Transaction(
-                amount: -70.0,
-                balance: -70.0,
+                amount: 70.0,
+                balance: 70.0,
                 account: account,
                 operationType: OperationType.PAGAMENTO,
                 eventDate: Date.parse("dd/MM/yyyy", "30/04/2017")
