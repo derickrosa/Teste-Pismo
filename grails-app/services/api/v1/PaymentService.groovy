@@ -19,7 +19,7 @@ class PaymentService {
                 transaction.balance += payment.balance
                 payment.balance = 0
             }
-            transaction.save()
+            transaction.save(flush: true)
 
             if (transaction.operationType == OperationType.SAQUE) {
                 deductedWithDrawalValue += deductedValue
@@ -27,7 +27,7 @@ class PaymentService {
             deductedCreditValue += deductedValue
         }
 
-        payment.save()
+        payment.save(flush: true)
 
         [deductedCreditValue: deductedCreditValue, deductedWithDrawalValue: deductedWithDrawalValue]
     }

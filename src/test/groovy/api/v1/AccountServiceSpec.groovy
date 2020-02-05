@@ -13,7 +13,7 @@ class AccountServiceSpec  extends Specification implements ServiceUnitTest<Accou
     }
 
     def setup() {
-        account =  new Account(availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00).save()
+        account =  new Account(availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00).save(flush: true)
     }
 
     void "test creating account"() {

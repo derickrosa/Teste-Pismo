@@ -11,13 +11,13 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
         setup:
         def operationTypeDebit = new OperationType(id: 1, description: 'COMPRA A VISTA', chargeOrder: 2)
         operationTypeDebit.id = 1
-        operationTypeDebit.save()
+        operationTypeDebit.save(flush: true)
 
         def operationTypeWithdrawal = new OperationType(description: 'SAQUE', chargeOrder: 0)
         operationTypeWithdrawal.id = 3
-        operationTypeWithdrawal.save()
+        operationTypeWithdrawal.save(flush: true)
 
-        new OperationType(description: 'SAQUE', chargeOrder: 0).save()
+        new OperationType(description: 'SAQUE', chargeOrder: 0).save(flush: true)
 
         expect:
         OperationType.count() == 2
@@ -77,7 +77,7 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
         setup:
         def operationType = new OperationType(id: 1, description: 'COMPRA A VISTA', chargeOrder: 2)
         operationType.id = 1
-        operationType.save()
+        operationType.save(flush: true)
 
         expect:
         OperationType.AVISTA == operationType
@@ -118,7 +118,7 @@ class OperationTypeSpec extends Specification implements DomainUnitTest<Operatio
         when: 'You instantiate a operationType with description which has been never used before'
         def operationType = new OperationType(description: 'SAQUE', chargeOrder: 0)
         operationType.id = 3
-        operationType.save()
+        operationType.save(flush: true)
 
         then: 'operationType is valid instance'
         operationType.validate()

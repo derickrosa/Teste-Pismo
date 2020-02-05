@@ -34,7 +34,7 @@ class FixtureService {
 
     Account createAccount(){
         if(Account.count() == 0) {
-            new Account(availableCreditLimit: 10000.00, availableWithdrawalLimit: 5000.00).save()
+            new Account(availableCreditLimit: 10000.00, availableWithdrawalLimit: 5000.00).save(flush: true)
         }
     }
 
@@ -50,8 +50,8 @@ class FixtureService {
 
     def setupUsers() {
         println("CRIANDO USUÁRIOS BÁSICOS...")
-        def roleSuporte = new api.security.Role(authority: "ROLE_SUPORTE", nome: "Suporte", descricao: "Suporte Técnico do sistema. Possui controle total do sistema.", nivelAcesso: 0).save()
-        def roleApi = new api.security.Role(authority: "ROLE_API", nome: "API", descricao: "Acessar a API. Possui acesso às APIs.", nivelAcesso: 1).save()
+        def roleSuporte = new api.security.Role(authority: "ROLE_SUPORTE", nome: "Suporte", descricao: "Suporte Técnico do sistema. Possui controle total do sistema.", nivelAcesso: 0).save(flush: true)
+        def roleApi = new api.security.Role(authority: "ROLE_API", nome: "API", descricao: "Acessar a API. Possui acesso às APIs.", nivelAcesso: 1).save(flush: true)
 
         def userSuporte = new User(nome: 'Pismo Soluções Tecnológicas', username: 'suporte.pismo', password: 'pismoadmin', email:'desenvolvimento@desenvolvimento.com.br', enabled: true, accountExpired: false, accountLocked: false, passwordExpired: false).save()
         def userAPI = new User(nome: 'Usuário API', username: 'api.pismo', password: 'pismoapi', email:'api@api.com.br', enabled: true, accountExpired: false, accountLocked: false, passwordExpired: false).save()

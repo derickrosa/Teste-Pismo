@@ -2,6 +2,8 @@ package api.v1
 
 import grails.converters.JSON
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 
 class AccountController {
 
@@ -31,6 +33,7 @@ class AccountController {
         render contentType: 'application/json', status: HttpStatus.CREATED, text: map as JSON
     }
 
+    @RequestMapping(method = RequestMethod.PATCH)
     def update(Long id) {
         def params = request.JSON
         Account account = Account.get(id)

@@ -11,13 +11,13 @@ class AccountService {
             availableWithdrawalLimit: params.available_withdrawal_limit.amount
         )
 
-        account.save()
+        account.save(flush: true)
     }
 
     Account update(Account account, Map params) {
         account.addAvailableCreditLimit(params.available_credit_limit?.amount)
         account.addAvailableWithdrawalLimit(params.available_withdrawal_limit?.amount)
 
-        account.save()
+        account.save(flush: true)
     }
 }
