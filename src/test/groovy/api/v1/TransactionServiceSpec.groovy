@@ -50,10 +50,6 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         instance.balance == -params.amount
         instance.account.id == params.account_id
         instance.operationType.id == params.operation_type_id
-
-        and: 'should write down only the account available credit limit'
-        account.availableCreditLimit == 900.0
-        account.availableWithdrawalLimit == 500.0
     }
 
     void "test creating withdrawal transaction"() {
@@ -74,10 +70,6 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         instance.balance == -params.amount
         instance.account.id == params.account_id
         instance.operationType.id == params.operation_type_id
-
-        and: 'should write down the account available credit and withdrawal limits'
-        account.availableCreditLimit == 900.0
-        account.availableWithdrawalLimit == 400.0
     }
 
     void "test creating payment transaction"() {
@@ -98,25 +90,21 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         instance.balance == params.amount
         instance.account.id == params.account_id
         instance.operationType.id == params.operation_type_id
-
-        and: 'should write down the account available credit and withdrawal limits'
-        account.availableCreditLimit == 1000.0
-        account.availableWithdrawalLimit == 500.0
     }
 
     void "test return transaction list ordered by chargeOrder and eventDate"() {
         given:
         new Transaction(
-                amount: -23.50,
-                balance: -23.50,
+                amount: 23.50,
+                balance: 23.50,
                 account: account,
                 operationType: OperationType.AVISTA,
                 eventDate: Date.parse("dd/MM/yyyy", "10/04/2017")
         ).save(failOnError: true)
 
         new Transaction(
-                amount: -18.7,
-                balance: -18.7,
+                amount: 18.7,
+                balance: 18.7,
                 account: account,
                 operationType: OperationType.PARCELADA,
                 eventDate: Date.parse("dd/MM/yyyy", "30/04/2017")
@@ -131,8 +119,8 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         ).save(failOnError: true)
 
         new Transaction(
-                amount: -50.0,
-                balance: -50.0,
+                amount: 50.0,
+                balance: 50.0,
                 account: account,
                 operationType: OperationType.SAQUE,
                 eventDate: Date.parse("dd/MM/yyyy", "05/04/2017")

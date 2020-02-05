@@ -31,6 +31,10 @@ class TransactionControllerSpec extends Specification implements ControllerUnitT
              create(_) >> transaction
         }
 
+        controller.accountService = Stub(AccountService) {
+            deductTransaction(_) >> null
+        }
+
         when:
         request.method = 'POST'
         request.contentType = JSON_CONTENT_TYPE

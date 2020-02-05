@@ -6,16 +6,18 @@ import org.springframework.http.HttpStatus
 class TransactionController {
 
     def transactionService
+    def accountService
 
     def save() {
-        def json = request.JSON
+        def params = request.JSON
 
-        Transaction transactionInstance = transactionService.create(json)
+        Transaction transactionInstance = transactionService.create(params)
         if (transactionInstance.hasErrors()) {
             render status: HttpStatus.NOT_ACCEPTABLE, text: transactionInstance.errors as JSON
             return
         }
 
+        accountService.deductTransaction(transactionInstance)
         def map = [transaction_id: transactionInstance.id, account_id: transactionInstance.account.id,
                    amount:transactionInstance.amount, balance:transactionInstance.balance]
 

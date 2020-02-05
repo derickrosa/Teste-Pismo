@@ -92,27 +92,4 @@ class AccountSpec extends Specification implements DomainUnitTest<Account> {
         1000                    | true     | null
         -90.5                   | false    | 'balance.insufficient'
     }
-
-
-    void "test addAvailableCreditLimit()"() {
-        setup:
-        def account = new Account(availableCreditLimit: 800.00).save()
-
-        when:
-        account.addAvailableCreditLimit(200.00)
-
-        then:
-        account.availableCreditLimit == 1000.00
-    }
-
-    void "test addAvailableWithdrawalLimit()"() {
-        setup:
-        def account = new Account(availableWithdrawalLimit: 500.00).save()
-
-        when:
-        account.addAvailableWithdrawalLimit(200.00)
-
-        then:
-        account.availableWithdrawalLimit == 700.00
-    }
 }

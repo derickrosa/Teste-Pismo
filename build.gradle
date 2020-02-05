@@ -67,7 +67,7 @@ dependencies {
 
     runtime 'org.grails.plugins:grails-console:2.1.1'
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
-    runtime "postgresql:postgresql:9.1-901.jdbc4"
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
     runtime "org.apache.tomcat:tomcat-jdbc"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.2"
     testCompile "org.grails:grails-gorm-testing-support"

@@ -22,7 +22,15 @@ class AccountService {
         account.save(flush: true)
     }
 
-    void addAvailableCreditLimit(Account account, BigDecimal amount){
+    void deductTransaction(Transaction transaction) {
+        if(transaction.operationType  == OperationType.PAGAMENTO) return
+
+        addAvailableCreditLimit(transaction.account, transaction.amount)
+        if (transaction.operationType == OperationType.SAQUE)
+            addAvailableWithdrawalLimit(transaction.account, transaction.amount)
+    }
+
+    void addAvailableCreditLimit(Account account, BigDecimal amount) {
         account.availableCreditLimit += amount
         account.save(flush: true)
     }

@@ -18,12 +18,6 @@ class TransactionService {
                 balance: params.amount
         ).save(failOnError: true, flush: true)
 
-        if(operationType  == OperationType.PAGAMENTO) return transaction
-
-        accountService.addAvailableCreditLimit(account, transaction.amount)
-        if (operationType == OperationType.SAQUE)
-            accountService.addAvailableWithdrawalLimit(account, transaction.amount)
-
         transaction
     }
 
