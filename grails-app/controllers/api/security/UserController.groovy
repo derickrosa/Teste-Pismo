@@ -1,6 +1,7 @@
 package api.security
 
-
+import api.security.User
+import  api.security.Role
 import grails.plugin.springsecurity.SpringSecurityUtils
 
 import static org.springframework.http.HttpStatus.*

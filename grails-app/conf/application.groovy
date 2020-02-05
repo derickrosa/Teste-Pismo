@@ -2,9 +2,9 @@ grails.plugin.console.enabled = true
 grails.databinding.dateFormats = ['dd/MM/yyyy', 'yyyy-MM-dd HH:mm:ss.S', "yyyy-MM-dd'T'hh:mm:ss'Z'"]
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'User'
-grails.plugin.springsecurity.authority.className = 'Role'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'UserRole'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'api.security.User'
+grails.plugin.springsecurity.authority.className = 'api.security.Role'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'api.security.UserRole'
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugin.springsecurity.password.algorithm = 'SHA-256'
 

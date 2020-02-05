@@ -7,7 +7,7 @@ class TransactionService {
 
     Transaction create(Map params) {
         Account account = Account.get(params.account_id)
-        OperationType operationType = OperationType.get(params.operation_type_id)
+        OperationType operationType = getOperationType(params.operation_type_id)
 
         Transaction transaction = new Transaction(
                 account: account,
@@ -23,6 +23,11 @@ class TransactionService {
             account.addAvailableWithdrawalLimit(transaction.amount)
 
         transaction
+    }
+
+    OperationType getOperationType(Long id){
+        if(!id) return OperationType.PAGAMENTO
+        OperationType.get(id)
     }
 
     List<Transaction> orderedTransactionList(Account account) {

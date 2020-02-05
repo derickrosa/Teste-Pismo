@@ -11,5 +11,6 @@ class UrlMappings {
         '/payments'(controller: 'payment', action: 'save')
         '/accounts/limits'(controller: 'account', action: 'limits')
         "/accounts/$id"(controller: 'account', action: 'update')
+        "/accounts"(controller: 'account', action: 'save')
     }
 }

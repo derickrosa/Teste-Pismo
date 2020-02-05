@@ -25,7 +25,8 @@ class PaymentController {
             }
 
             Map deductedValues = paymentService.processPayment(paymentTransaction, transactionList)
-            accountService.update(account, deductedValues)
+            accountService.update(account, [available_credit_limit:[amount: deductedValues.deductedCreditValue],
+                                            available_withdrawal_limit:[amount: deductedValues.deductedWithDrawalValue]])
 
             map << [account_id: account.id, available_credit_limit: account.availableCreditLimit, available_withdrawal_limit: account.availableWithdrawalLimit]
         }

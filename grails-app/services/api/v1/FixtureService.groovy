@@ -32,15 +32,13 @@ class FixtureService {
         }
     }
 
-    void createAccount(){
-        if(!Account.findById(100)) {
-            Account account = new Account(200)
-            account.id = 100
-            account.save(flush: true)
+    Account createAccount(){
+        if(Account.count() == 0) {
+            new Account(availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00).save()
         }
     }
 
-    void createTransactions(Long id = 100) {
+    void createTransactions(Long id = 1) {
         Account account = Account.get(id)
         Account.saveAll(
             new Transaction(account: account, operationType: OperationType.SAQUE, amount: 50, balance: 200, eventDate: Date.parse("dd/MM/yyyy", "20/08/2019")),

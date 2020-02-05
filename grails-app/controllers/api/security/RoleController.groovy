@@ -1,6 +1,7 @@
 package api.security
 
-
+import api.security.User
+import  api.security.Role
 import static org.springframework.http.HttpStatus.*
 import grails.gorm.transactions.Transactional
 
