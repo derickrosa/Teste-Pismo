@@ -32,14 +32,4 @@ class Account {
             true
         }
     }
-
-    void addAvailableCreditLimit(BigDecimal amount){
-        this.availableCreditLimit += amount
-        this.save(flush: true)
-    }
-
-    void addAvailableWithdrawalLimit(BigDecimal amount){
-        this.availableWithdrawalLimit += amount
-        this.save(flush: true)
-    }
 }

@@ -1,6 +1,7 @@
 package api.v1
 
 import grails.gorm.transactions.Transactional
+import jxl.write.Boolean
 
 @Transactional
 class AccountService {
@@ -15,9 +16,19 @@ class AccountService {
     }
 
     Account update(Account account, Map params) {
-        account.addAvailableCreditLimit(params.available_credit_limit?.amount)
-        account.addAvailableWithdrawalLimit(params.available_withdrawal_limit?.amount)
+        addAvailableCreditLimit(account, params.available_credit_limit?.amount)
+        addAvailableWithdrawalLimit(account, params.available_withdrawal_limit?.amount)
 
+        account.save(flush: true)
+    }
+
+    void addAvailableCreditLimit(Account account, BigDecimal amount){
+        account.availableCreditLimit += amount
+        account.save(flush: true)
+    }
+
+    void addAvailableWithdrawalLimit(Account account, BigDecimal amount){
+        account.availableWithdrawalLimit += amount
         account.save(flush: true)
     }
 }

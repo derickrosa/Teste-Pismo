@@ -5,6 +5,8 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class TransactionService {
 
+    def accountService
+
     Transaction create(Map params) {
         Account account = Account.get(params.account_id)
         OperationType operationType = getOperationType(params.operation_type_id)
@@ -18,9 +20,9 @@ class TransactionService {
 
         if(operationType  == OperationType.PAGAMENTO) return transaction
 
-        account.addAvailableCreditLimit(transaction.amount)
+        accountService.addAvailableCreditLimit(account, transaction.amount)
         if (operationType == OperationType.SAQUE)
-            account.addAvailableWithdrawalLimit(transaction.amount)
+            accountService.addAvailableWithdrawalLimit(account, transaction.amount)
 
         transaction
     }
