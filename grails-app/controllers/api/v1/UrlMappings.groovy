@@ -7,10 +7,10 @@ class UrlMappings {
 
 //        "/accounts"(resources:'account')
 
-        '/transactions'(controller: 'transaction', action: 'save')
-        '/payments'(controller: 'payment', action: 'save')
-        '/accounts/limits'(controller: 'account', action: 'limits')
-        "/accounts/$id"(controller: 'account', action: 'update')
-        "/accounts"(controller: 'account', action: 'save')
+        '/v1/transactions'(controller: 'transaction', action: 'save')
+        '/v1/payments'(controller: 'payment', action: 'save')
+        '/v1/accounts/limits'(controller: 'account', action: 'limits')
+        "/v1/accounts/$id"(controller: 'account', action: 'update')
+        "/v1/accounts"(controller: 'account', action: 'save')
     }
 }

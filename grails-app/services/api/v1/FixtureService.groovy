@@ -34,7 +34,7 @@ class FixtureService {
 
     Account createAccount(){
         if(Account.count() == 0) {
-            new Account(availableCreditLimit: 1000.00, availableWithdrawalLimit: 500.00).save()
+            new Account(availableCreditLimit: 10000.00, availableWithdrawalLimit: 5000.00).save()
         }
     }
 

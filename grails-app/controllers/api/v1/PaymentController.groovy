@@ -15,7 +15,6 @@ class PaymentController {
 
         params.each { payment ->
             Account account = Account.get(payment.account_id)
-            println(payment.account_id)
             List<Transaction> transactionList = transactionService.orderedTransactionList(account)
             Transaction paymentTransaction = transactionService.create(payment)
 

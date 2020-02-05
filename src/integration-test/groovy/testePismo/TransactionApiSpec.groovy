@@ -51,16 +51,16 @@ class TransactionApiSpec extends Specification {
             contentType('application/json')
             json(data)
         }
-        println(resp.json.access_token)
+
         resp.json.access_token
     }
 
-    void "POST /transactions"() {
+    void "POST /v1/transactions"() {
         given:
         def rest = new RestBuilder()
         def data = [amount:100.0, account_id: Account.first().id, operation_type_id:1]
         when:
-        def resp = rest.post("http://localhost:${serverPort}/testePismo/transactions") {
+        def resp = rest.post("http://localhost:${serverPort}/testePismo/v1/transactions") {
             accept('application/json')
             contentType('application/json')
             json(data)
@@ -70,12 +70,12 @@ class TransactionApiSpec extends Specification {
         resp.status == 201
     }
 
-    void "POST /accounts"() {
+    void "POST /v1/accounts"() {
         given:
         def rest = new RestBuilder()
         def data = ["available_credit_limit":["amount":1000.0], "available_withdrawal_limit":["amount":500.00]]
         when:
-        def resp = rest.post("http://localhost:${serverPort}/testePismo/accounts") {
+        def resp = rest.post("http://localhost:${serverPort}/testePismo/v1/accounts") {
             accept('application/json')
             contentType('application/json')
             json(data)
@@ -85,12 +85,12 @@ class TransactionApiSpec extends Specification {
         resp.status == 201
     }
 
-    void "POST /payments"() {
+    void "POST /v1/payments"() {
         given:
         def rest = new RestBuilder()
         def data = [[amount:150, account_id: Account.first().id], [amount:150, account_id: Account.first().id]]
         when:
-        def resp = rest.post("http://localhost:${serverPort}/testePismo/payments") {
+        def resp = rest.post("http://localhost:${serverPort}/testePismo/v1/payments") {
             accept('application/json')
             contentType('application/json')
             json(data)
@@ -100,12 +100,12 @@ class TransactionApiSpec extends Specification {
         resp.status == 201
     }
 
-    void "GET /accounts/limits"() {
+    void "GET /v1/accounts/limits"() {
         given:
         def rest = new RestBuilder()
 
         when:
-        def resp = rest.get("http://localhost:${serverPort}/testePismo/accounts/limits") {
+        def resp = rest.get("http://localhost:${serverPort}/testePismo/v1/accounts/limits") {
             accept('application/json')
             contentType('application/json')
             header'X-Auth-Token', token
@@ -114,7 +114,7 @@ class TransactionApiSpec extends Specification {
         resp.status == 200
     }
 
-    void "PATCH /accounts"() {
+    void "PATCH /v1/accounts"() {
         given:
         def rest = new RestBuilder()
         def data = """{
@@ -127,7 +127,7 @@ class TransactionApiSpec extends Specification {
         }"""
         when:
 
-        def resourceUrl = "http://localhost:${serverPort}/testePismo/accounts/${Account.first().id}"
+        def resourceUrl = "http://localhost:${serverPort}/testePismo/v1/accounts/${Account.first().id}"
         ResponseEntity resp =
                 patchRestTemplate.exchange(resourceUrl, HttpMethod.PATCH, getPostRequestHeaders(data), Account.class)
 
