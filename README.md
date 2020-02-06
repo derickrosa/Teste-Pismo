@@ -29,7 +29,7 @@ https://documenter.getpostman.com/view/8486305/SWTG6bHR
 
 ## Decisões de projeto
 
-+ #### FrameWork Grails
++ #### Framework Grails
 Por já estar familiarizado com a tecnologia e com o intuito de agilizar o desenvolvimento, optei por desenvolver o projeto utilizando o framework Grails versão 3.3.0 com Groovy 2.4.11.
 
 + #### Estrutura do projeto
