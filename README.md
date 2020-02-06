@@ -10,17 +10,17 @@ API desenvolvida em Groovy utilizando o framework Grails para processar transaç
 
 ## Endpoints disponibilizados
 
-POST 	/login	 		Obter token de acesso utilizado nas chamadas à API
+POST =>   /login |                 Obter token de acesso utilizado nas chamadas à API
 
-POST 	/v1/accounts 		Criar uma conta
+POST =>   /v1/accounts |           Criar uma conta
 
-GET 	/v1/limits 		Obter lista de contas
+GET  =>   /v1/limits |             Obter lista de contas
 
-PATCH 	/v1/accounts/<id> 	Atualizar limites de uma conta específica
+PATCH =>  /v1/accounts/<id> |       Atualizar limites de uma conta específica
 	
-POST 	/v1/transactions 	Criar uma transação e processar um pagamento caso seja o tipo operação
+POST =>   /v1/transactions |       Criar uma transação e processar um pagamento caso seja o tipo operação
 
-POST 	/v1/payments 		Criar e processar uma lista de pagamentos
+POST =>   /v1/payments |           Criar e processar uma lista de pagamentos
 
 ## Testando a aplicação: Projeto Postman
 Segue o link para acesso a documentação do Postman
