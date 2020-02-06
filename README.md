@@ -16,7 +16,7 @@ POST =>   /v1/accounts |           Criar uma conta
 
 GET  =>   /v1/limits |             Obter lista de contas
 
-PATCH =>  /v1/accounts/<id> |       Atualizar limites de uma conta específica
+PATCH =>  /v1/accounts/id        Atualizar limites de uma conta específica
 	
 POST =>   /v1/transactions |       Criar uma transação e processar um pagamento caso seja o tipo operação
 
