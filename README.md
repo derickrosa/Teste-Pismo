@@ -1,48 +1,49 @@
 # Desafio Pismo
 
-API desenvolvida em Groovy utilizando o framework Grails para simular transações em uma conta digital.
+API desenvolvida em Groovy utilizando o framework Grails para processar transações em uma conta digital.
 
 ## Instruções para execução com Docker
 
-* Entrar no diretório da aplicação: ```cd ~/testePismo.```
+* Entrar no diretório da aplicação: ```cd ~/Teste-Pismo/Docker```
 * Executar o comando:```docker-compose up -d```
 * A aplicação deverá estar rodando em: http://localhost:8081/testepismo/
 
-## Instruções para execução local
+## Endpoints disponibilizados
 
-Caso vocẽ tenha o desejo de executar a aplicação localmente, os passos são:
+POST 	/login	 		Obter token de acesso utilizado nas chamadas à API
 
-* Instalar <a href="https://docs.grails.org/latest/guide/gettingStarted.html">Grails Framework Versão 3.3.0 /Groovy 2.4.11</a>
+POST 	/v1/accounts 		Criar uma conta
 
-* Instalar <a href="https://www.postgresql.org/download/">PostgreSQL</a>. Banco padrão: "pismo_development"
+GET 	/v1/limits 		Obter lista de contas
 
-* Clonar projeto: https://github.com/derickrosa/Teste-Pismo.git
+PATCH 	/v1/accounts/<id> 	Atualizar limites de uma conta específica
+	
+POST 	/v1/transactions 	Criar uma transação e processar um pagamento caso seja o tipo operação
 
-* Entrar no diretório da aplicação: ```cd ~/testePismo.```
+POST 	/v1/payments 		Criar e processar uma lista de pagamentos
 
-* Executar o comando ```grails run-app```.
+## Testando a aplicação: Projeto Postman
+Segue o link para acesso a documentação do Postman
 
-Não há necessidade de criar um arquivo WAR ou executar o deploy da aplicação.
-
-A aplicação deverá estar rodando em: http://localhost:8080/testePismo.
+https://documenter.getpostman.com/view/8486305/SWTG6bHR
 
 ## Decisões de projeto
 
 + #### FrameWork Grails
-Por já estar habituado com a tecnologia e com o intuito de agilizar o desenvolvimento , optei por desenvolver o projeto utilizando o framework Grails versão 3.3.0 com Groovy 2.4.11.
+Por já estar familiarizado com a tecnologia e com o intuito de agilizar o desenvolvimento, optei por desenvolver o projeto utilizando o framework Grails versão 3.3.0 com Groovy 2.4.11.
 
 + #### Estrutura do projeto
-Este projeto utiliza restful controllers para processar e validar as requisições, services para processar os dados e classes para representar os modelos de dados via hibernate.
+Este projeto utiliza restful controllers para processar e validar as requisições, services para processar os dados e classes para representar o domínio de dados via hibernate.
 
 + #### Segurança e Autenticação
 Para autenticação foi utilizado Stateless Authentication implementado utilizando o Spring Security.
-Inicialmente é necessário realizar uma requisição de login para gerar um X-Auth-Token.
+Inicialmente é necessário realizar uma requisição de login para gerar um token de acesso.
 
-Endoint: ~/testePismo/login
+Endoint: ~/Teste-Pismo/login
 
 Payload:
-
-```{
+```
+{
     "username": "api.pismo",
     "password": "pismoapi"
 }
@@ -61,10 +62,7 @@ Este token deverá ser incluído no header das futuras requisições sob a key "
 
 ## Decisões de Negócio
 
-**Obs: se estiver rodando o arquivo no Docker atenção, os endpoints estarão acessíveis em "http://localhost:8081/testepismo/" (tudo minúsculo, "testepismo" ao invés de "testePismo").
-**
-
-+ #### PATCH => ~/testePismo/accounts/<id>
++ #### PATCH => ~/Teste-Pismo/v1/accounts/<id>
 
 Exemplo de payload:
 
@@ -81,11 +79,11 @@ Exemplo de payload:
   
 Este endpoint receberá valores de limite para ```available_credit_limit``` e ```available_withdrawal_limit``` e abate os respectivos "amount" dos saldos da conta <id>.
   
-+ #### GET   => ~/testePismo/accounts/limits
++ #### GET   => ~/Teste-Pismo/v1/accounts/limits
 
 Este endpoint retorna uma lista de contas "accounts" com as respectivas informações de limite.
   
-+ #### POST  => ~/testePismo/transactions
++ #### POST  => ~/Teste-Pismo/v1/transactions
 
 Exemplo de payload:
 
@@ -97,14 +95,11 @@ Exemplo de payload:
 }
 ```
 
-Este endpoint recebe as informações de uma transação em um conta e cria uma transaction, o valor da transação é automaticamente abatido de ambos os limites da conta, se a conta com o id informado não existir, uma nova conta é criada com saldo negativo equivalente ao valor da transação.
+Este endpoint recebe as informações de uma transação em uma conta e cria uma transaction, o valor da transação é automaticamente abatido do limite de crédito se operação de compra ou abatido dos limites de crédito e saque se operação de saque.
 
 Foi criado um setup no projeto para pré cadastrar os tipos de operação suportados, que foram retirados do comando do desafio.
-<p align="center">
-  <img src="https://github.com/derickrosa/Teste-Pismo/blob/master/tabela_operation_type.png">
-</p>
   
-+ #### POST  => ~/testePismo/payments
++ #### POST  => ~/Teste-Pismo/v1/payments
 
 Exemplo de payload:
 ```
@@ -120,60 +115,46 @@ Exemplo de payload:
 ]
 ```
 
-Este endpoint recebe uma lista de pagamentos a serem abatidos das transações da conta informada em cada pagamento. É criado uma transação para cada pagamento "TransactionPayment". É realizado uma busca pelas transações válidas para serem abatidas de acordo com a conta, o status não pago (foi adotado a nomenclatura "PURCHASED"). Esta transações são ordenadas de acordo com a prioridade e então tem o saldo abatido de acordo com o valor disponível no pagamento e se quitadas tem o status alterado para paga. Ao final, se ainda tiver saldo este saldo é acrescentado a ambos limites da conta e a transação de pagamento é alterada também paga "PAID". 
+Este endpoint recebe uma lista de pagamentos a serem abatidos das transações da conta informada em cada pagamento. É criado uma transação do tipo operação pagamento. É realizado uma ordenação das transações de acordo com a prioridade (chargeOrder e eventDate) e então cada uma tem o saldo abatido de acordo com o valor disponível do pagamento. Se não houver transações de débito a serem abatidas nenhum pagamento é realizado.
 
-Foi criado uma classe extrata "PaymentTransaction" para armazenar as informações de pagamento da transações de maneira que fosse possível mapear quais transações foram abatidas por um determinado pagamento e por quais pagamentos uma transação foi quitada.
+## Esquema de Dados
 
 <p align="center">
-  <img src="https://github.com/derickrosa/Teste-Pismo/blob/master/diagrama_classes_account.png">
+  <img src="modelo_dados.jpeg">
 </p>
 
 ## Testes
 
 Os seguintes testes automatizados foram implementados:
 
-+ #### Unit tests
+# Unit tests
 
-Diretório: /src/test/groovy/com/pismo/cadastro
+Diretório: Teste-Pismo/src/test/groovy/api/v1
+Domain:
+
+	*AccountSpec
+	*TransactionSpec
+	*OperationType
 
 Controllers:
 
-* AccountControllerSpec
+	* AccountControllerSpec
 
-	* AccountController::limits()
-	* AccountController::update()
+	* TransactionControllerSpec
 
-* TransactionControllerSpec
-
-	* TransactionController::save()
-
-* PaymentControllerSpec
-
-	* PaymentController::save()
+	* PaymentControllerSpec
 
 Services
 
-* AccountServiceSpec
+	* AccountServiceSpec
 
-	* AccountService::update(AccountCommand accountCommand, Account account)
-	
-* TransactionServiceSpec
+	* TransactionServiceSpec
 
-	* TransactionService::save(TransactionCommand transactionCommand)
-	
-* PaymentServiceSpec
+	* PaymentServiceSpec
 
-	* PaymentService::save(TransactionCommand transactionCommand)
-	* PaymentService::getTransactionToPay(PaymentTransaction paymentTransaction)
-	* PaymentService::charge(List<Long> transactionList, PaymentTransaction paymentTransaction)
 
-+ #### Integration tests
+# Integration tests
 
 Diretório: /src/integration-test/groovy/testePismo
 
-* TransactionApiSpec
-
-## Possíveis Melhorias
-
-+ #### Refinamento de Regras de Negócio
-Este projeto representa uma ideia simplificada de uma conta digital e que necessitaria de um refinamento nos processos implementados para uma solução mais robusta e que pudesse ser utilizado no mundo real, podendo conter inclusive interpretações equivocadas por parte do desenvolvedor (no caso eu).
+	* TransactionApiSpec
