@@ -129,10 +129,9 @@ class TransactionServiceSpec  extends Specification implements ServiceUnitTest<T
         when:
         def list = service.orderedTransactionList(account)
 
-        then: 'should return an ordered transaction list'
+        then: 'should return an ordered debit only transactions list'
         list[0].operationType == OperationType.SAQUE
-        list[1].operationType == OperationType.PAGAMENTO
-        list[2].operationType == OperationType.PARCELADA
-        list[3].operationType == OperationType.AVISTA
+        list[1].operationType == OperationType.PARCELADA
+        list[2].operationType == OperationType.AVISTA
     }
 }

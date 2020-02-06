@@ -27,7 +27,10 @@ class TransactionService {
     }
 
     List<Transaction> orderedTransactionList(Account account) {
-        List<Transaction> transactionList = Transaction.findAllByAccount(account)
+        List<Transaction> transactionList = Transaction.createCriteria().list {
+            eq('account', account)
+            ne('operationType', OperationType.PAGAMENTO)
+        }
 
         transactionList.sort{ x, y->
             if(x.operationType.chargeOrder == y.operationType.chargeOrder){

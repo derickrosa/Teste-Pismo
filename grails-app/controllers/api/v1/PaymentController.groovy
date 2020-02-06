@@ -16,18 +16,20 @@ class PaymentController {
         params.each { payment ->
             Account account = Account.get(payment.account_id)
             List<Transaction> transactionList = transactionService.orderedTransactionList(account)
-            Transaction paymentTransaction = transactionService.create(payment)
+            if (transactionList) {
+                Transaction paymentTransaction = transactionService.create(payment)
 
-            if (paymentTransaction.hasErrors()) {
-                render status: HttpStatus.NOT_ACCEPTABLE, text: paymentTransaction.errors as JSON
-                return
+                if (paymentTransaction.hasErrors()) {
+                    render status: HttpStatus.NOT_ACCEPTABLE, text: paymentTransaction.errors as JSON
+                    return
+                }
+
+                Map deductedValues = paymentService.processPayment(paymentTransaction, transactionList)
+                accountService.update(account, [available_credit_limit:[amount: deductedValues.deductedCreditValue],
+                                                available_withdrawal_limit:[amount: deductedValues.deductedWithDrawalValue]])
+
+                map << [account_id: account.id, available_credit_limit: account.availableCreditLimit, available_withdrawal_limit: account.availableWithdrawalLimit]
             }
-
-            Map deductedValues = paymentService.processPayment(paymentTransaction, transactionList)
-            accountService.update(account, [available_credit_limit:[amount: deductedValues.deductedCreditValue],
-                                            available_withdrawal_limit:[amount: deductedValues.deductedWithDrawalValue]])
-
-            map << [account_id: account.id, available_credit_limit: account.availableCreditLimit, available_withdrawal_limit: account.availableWithdrawalLimit]
         }
 
         render contentType: 'application/json', status: HttpStatus.CREATED, text: map as JSON

@@ -7,6 +7,7 @@ class TransactionController {
 
     def transactionService
     def accountService
+    def paymentService
 
     def save() {
         def params = request.JSON
@@ -18,6 +19,16 @@ class TransactionController {
         }
 
         accountService.deductTransaction(transactionInstance)
+
+        if(transactionInstance.operationType == OperationType.PAGAMENTO){
+            List<Transaction> transactionList = transactionService.orderedTransactionList(transactionInstance.account)
+            if(transactionList){
+                Map deductedValues = paymentService.processPayment(transactionInstance, transactionList)
+                accountService.update(account, [available_credit_limit:[amount: deductedValues.deductedCreditValue],
+                                                available_withdrawal_limit:[amount: deductedValues.deductedWithDrawalValue]])
+            }
+        }
+
         def map = [transaction_id: transactionInstance.id, account_id: transactionInstance.account.id,
                    amount:transactionInstance.amount, balance:transactionInstance.balance]
 

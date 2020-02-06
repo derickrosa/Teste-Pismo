@@ -1,10 +1,15 @@
 package api.v1
 
+import grails.testing.gorm.DataTest
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
 
-class TransactionControllerSpec extends Specification implements ControllerUnitTest<TransactionController>{
+class TransactionControllerSpec extends Specification implements ControllerUnitTest<TransactionController>, DataTest{
+
+    void setupSpec() {
+        mockDomains(Account, OperationType)
+    }
 
     void "test save action"() {
         setup:
